@@ -1,0 +1,153 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar matDialogTitle color="primary" class="mat-accent m-0">
+    <mat-toolbar-row color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title-dialog">
+        <span>Conectarse</span>
+      </span>
+      <button mat-button color="primary" (click)="onCloseDialog()">
+        <mat-icon class="close-icon">close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+
+
+
+  <div mat-dialog-content class="my-dialog-content">
+
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
+
+      <button mat-raised-button full (click)="listPairedDevices()" color="primary">
+        <ion-icon name="refresh"></ion-icon> Refresh Bluetooth Devices
+      </button>
+
+      <ion-row>
+        <ion-col>
+          <ion-list radio-group>
+            <ion-item *ngFor="let device of pairedList" (click)="onSelectChange(device.address)">
+              <ion-label>{{device.name}}
+                <p>{{'( '+device.address+' ) '}}</p>
+              </ion-label>
+              <mat-checkbox [checked]="SelectedDevice.isSelected(device.address)" (click)="$event.stopPropagation()"
+                (change)="onSelectChange(device.address)" slot="end" color="primary"></mat-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+
+      <button mat-raised-button style="margin-top:10px;" full [disabled]="MacAddress == '' || !MacAddress"
+        (click)="Connect2Device()" color="primary">
+        <ion-icon name="bluetooth"></ion-icon>Connect Bluetooth Devices
+      </button>
+
+      <div style="margin-top: 10px;">
+        <div class="blockData">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+            <span style="font-weight: 600;font-size:17px;">Checkeo de comandos:</span>
+          </div>
+          <mat-divider style="margin-bottom:10px;"></mat-divider>
+          <span style="font-weight: 600; font-size:15px;">Estado del Robot:</span>
+          <ion-list>
+            <ion-item>
+              <ion-icon [name]="'paper-plane'" slot="start"></ion-icon>
+              {{'Velocidad linear:'}}
+              <div class="item-note" slot="end">
+                {{velocidadLinear}}
+              </div>
+            </ion-item>
+            <ion-item>
+              <ion-icon [name]="'football'" slot="start"></ion-icon>
+              {{'Velocidad angular:'}}
+              <div class="item-note" slot="end">
+                {{velocidadAngular}}
+              </div>
+            </ion-item>
+            <ion-item>
+              <ion-icon [name]="'flask'" slot="start"></ion-icon>
+              {{'Inclinacion:'}}
+              <div class="item-note" slot="end">
+                {{inclinacion}}
+              </div>
+            </ion-item>
+          </ion-list>
+          <button [disabled]="MacAddress == '' || !MacAddress" id="SendBluetooth" mat-raised-button full
+            (click)="getEstado()" color="primary">
+            <ion-icon name="send"></ion-icon>
+            Obtener Estado
+          </button>
+        </div>
+
+        <div class="blockData">
+          <mat-divider style="margin-bottom:10px;"></mat-divider>
+          <span style="font-weight: 600; font-size:15px;">Enviar Referencias:</span>
+          <div fxLayout="row" style="margin-top:15px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+            <mat-form-field appearance="outline" fxFlex="48">
+              <mat-label>Velocidad lineal</mat-label>
+              <input type="number" placeholder="Velocidad lineal" required matInput [formControl]="sp_velocityForm">
+              <mat-error *ngIf="sp_velocityForm.hasError('required')"> LLene este campo</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="48">
+              <mat-label>Velocidad angular</mat-label>
+              <input type="number" placeholder="Velocidad angular" required matInput
+                [formControl]="sp_angular_velocityForm">
+              <mat-error *ngIf="sp_angular_velocityForm.hasError('required')"> LLene este campo</mat-error>
+            </mat-form-field>
+          </div>
+          <button
+            [disabled]="MacAddress == '' || !MacAddress || sp_angular_velocityForm.invalid || sp_velocityForm.invalid  "
+            id="SendBluetooth" mat-raised-button full (click)="sendSetPoint()" color="primary">
+            <ion-icon name="send"></ion-icon>
+            Enviar Referencias
+          </button>
+        </div>
+
+        <div class="blockData">
+          <mat-divider style="margin-bottom:10px;"></mat-divider>
+          <span style="font-weight: 600; font-size:15px;">Constantes de los PID:</span>
+          <div fxLayout="row" style="margin-top:15px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+            <span>Kc_i:</span>
+            <span>{{Kc_i}}</span>
+            <span>Ki_i:</span>
+            <span>{{Ki_i}}</span>
+            <span>Kd_i:</span>
+            <span>{{Kd_i}}</span>
+          </div>
+          <div fxLayout="row" style="margin-top:15px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+            <span>Kc_v:</span>
+            <span>{{Kc_v}}</span>
+            <span>Ki_v:</span>
+            <span>{{Ki_v}}</span>
+            <span>Kd_v:</span>
+            <span>{{Kd_v}}</span>
+          </div>
+          <div fxLayout="row" style="margin-top:15px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+            <span>Kc_w:</span>
+            <span>{{Kc_w}}</span>
+            <span>Ki_w:</span>
+            <span>{{Ki_w}}</span>
+            <span>Kd_w:</span>
+            <span>{{Kd_w}}</span>
+          </div>
+          <button style="margin-top:10px;" [disabled]="MacAddress == '' || !MacAddress" id=" SendBluetooth"
+            mat-raised-button full (click)="sendGetAllPIDConstantes()" color="primary">
+            <ion-icon name="send"></ion-icon>
+            Obtener constantes
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
+    <button mat-raised-button color="primary" (click)="onCloseDialog()">
+      Guardar
+    </button>
+  </div>
+
+
+</div>

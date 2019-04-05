@@ -1,0 +1,72 @@
+.app-dialog-connect-to-bluetooth {
+
+    .mat-dialog-container {
+        padding: 0;
+        width: 15cm !important;
+
+        .mat-toolbar {
+            flex: 1 0 auto;
+            min-height: initial;
+        }
+
+        .toolbar-bottom {
+            height: auto;
+        }
+    }
+
+    .blockData {
+        margin-top: 25px;
+
+    }
+
+    .dialog-content-wrapper {
+        max-height: 98vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cdk-overlay-pane {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    @media(max-width: 1000px) {
+        .cdk-overlay-pane {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .my-dialog-content {
+        padding: 15px !important;
+        margin: 0px !important;
+    }
+
+
+    .mat-dialog-actions {
+        padding: 11px 15px;
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 52px;
+        align-items: center !important;
+        margin-bottom: 0px;
+    }
+
+
+    .close-icon {
+        font-size: 30px;
+        color: white;
+    }
+
+    #row-input {
+        margin-top: 20px !important;
+    }
+
+    #SendBluetooth {
+        margin-top: 10px;
+
+    }
+
+
+}
