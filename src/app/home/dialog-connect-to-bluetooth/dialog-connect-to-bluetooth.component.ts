@@ -152,7 +152,6 @@ export class DialogConnectToBluetoothComponent implements OnInit {
               this.velocidadAngular = estado[1];
               this.inclinacion = estado[2];
               this.bluetoothSerial.clear().then(() => { });
-              this.utilService.showToast(estado);
             }
           }
         });
@@ -172,7 +171,6 @@ export class DialogConnectToBluetoothComponent implements OnInit {
               this.Ki_v = estado[1];
               this.Kd_v = estado[2];
               this.bluetoothSerial.clear().then(() => { });
-              this.utilService.showToast(estado);
             }
           }
         });
@@ -191,7 +189,6 @@ export class DialogConnectToBluetoothComponent implements OnInit {
               this.Ki_w = estado[1];
               this.Kd_w = estado[2];
               this.bluetoothSerial.clear().then(() => { });
-              this.utilService.showToast(estado);
             }
           }
         });
@@ -209,7 +206,6 @@ export class DialogConnectToBluetoothComponent implements OnInit {
               this.Ki_i = estado[1];
               this.Kd_i = estado[2];
               this.bluetoothSerial.clear().then(() => { });
-              this.utilService.showToast(estado);
             }
           }
         });
