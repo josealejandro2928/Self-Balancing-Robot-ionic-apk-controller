@@ -30,8 +30,8 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   Ki_i = 0.0; Ki_v = 0.0; Ki_w = 0.0;
   Kd_i = 0.0; Kd_v = 0.0; Kd_w = 0.0;
 
-  sp_velocityForm = new FormControl(null, [Validators.required]);
-  sp_angular_velocityForm = new FormControl(null, [Validators.required]);
+  sp_velocityForm = new FormControl(null, [Validators.required, Validators.min(-1.0), Validators.max(1.0)]);
+  sp_angular_velocityForm = new FormControl(null, [Validators.required, Validators.min(-5.0), Validators.max(5.0)]);
   SelectedDevice = new SelectionModel(true);
 
 
@@ -219,7 +219,10 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   }
 
   onCloseDialog(): void {
-    this.dialogRef.close();
+    this.bluetoothSerial.clear().then(() => {
+      this.dialogRef.close();
+    })
+
   }
 
 

@@ -87,12 +87,16 @@
               <mat-label>Velocidad lineal</mat-label>
               <input type="number" placeholder="Velocidad lineal" required matInput [formControl]="sp_velocityForm">
               <mat-error *ngIf="sp_velocityForm.hasError('required')"> LLene este campo</mat-error>
+              <mat-error *ngIf="sp_velocityForm.hasError('min') || sp_velocityForm.hasError('max')"> Furea de rango
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="48">
               <mat-label>Velocidad angular</mat-label>
               <input type="number" placeholder="Velocidad angular" required matInput
                 [formControl]="sp_angular_velocityForm">
-              <mat-error *ngIf="sp_angular_velocityForm.hasError('required')"> LLene este campo</mat-error>
+              <mat-error *ngIf="sp_angular_velocityForm.hasError('required')"> Fuera de rango</mat-error>
+              <mat-error *ngIf="sp_angular_velocityForm.hasError('min') || sp_angular_velocityForm.hasError('max')">
+                Fuera de rango</mat-error>
             </mat-form-field>
           </div>
           <button
