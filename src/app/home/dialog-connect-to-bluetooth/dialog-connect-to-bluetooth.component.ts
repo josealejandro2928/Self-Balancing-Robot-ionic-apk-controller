@@ -23,9 +23,9 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   pairedDeviceID = 0;
   dataSend = 0.0;
   MacAddress = '';
-  velocidadLinear = 0.05;
-  velocidadAngular = 0.012;
-  inclinacion = 0.05;
+  velocidadLinear = 0.00;
+  velocidadAngular = 0.00;
+  inclinacion = 0.00;
   Kc_i = 0.0; Kc_v = 0.0; Kc_w = 0.0;
   Ki_i = 0.0; Ki_v = 0.0; Ki_w = 0.0;
   Kd_i = 0.0; Kd_v = 0.0; Kd_w = 0.0;
@@ -61,9 +61,8 @@ export class DialogConnectToBluetoothComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.utilService.convertFloat2Uint8Array(new Float32Array([2.35]), Uint8Array));
-    console.log(this.utilService.strToBuffer('2.35'));
-
+    // console.log(this.utilService.convertFloat2Uint8Array(new Float32Array([2.35]), Uint8Array));
+    // console.log(this.utilService.strToBuffer('2.35'));
   }
 
 
@@ -73,7 +72,7 @@ export class DialogConnectToBluetoothComponent implements OnInit {
     this.bluetoothSerial.isEnabled().then(success => {
       this.listPairedDevices();
     }, error => {
-      this.utilService.showError("Por favor habilite el Bluetooth")
+      this.utilService.showError('Por favor habilite el Bluetooth');
     });
   }
 
@@ -82,7 +81,7 @@ export class DialogConnectToBluetoothComponent implements OnInit {
       this.pairedList = success;
       this.listToggle = true;
     }, error => {
-      this.utilService.showError("Por favor habilite el Bluetooth")
+      this.utilService.showError('Por favor habilite el Bluetooth');
     });
   }
 
@@ -96,13 +95,13 @@ export class DialogConnectToBluetoothComponent implements OnInit {
       this.SelectedDevice.select(address);
       this.MacAddress = address;
     }
-    console.log(this.MacAddress);
+    // console.log(this.MacAddress);
   }
 
   Connect2Device() {
     this.spinnerDialog.show('Espere', 'Conectándose.....');
     if (this.MacAddress.length === 0 || !this.MacAddress) {
-      this.utilService.showError('Seleccione el dispositivo vinculado para conectarse');
+      this.utilService.showError('Seleccione algún dispositivo vinculado para conectarse');
       return;
     } else {
       this.utilService.showToast(this.MacAddress);
@@ -116,17 +115,17 @@ export class DialogConnectToBluetoothComponent implements OnInit {
     this.bluetoothSerial.connect(address).subscribe(success => {
       this.utilService.MacAddress = address;
       this.spinnerDialog.hide();
-      this.utilService.showToast("Successfully Connected");
+      this.utilService.showToast('Correctamente conectado');
     }, error => {
       this.spinnerDialog.hide();
-      this.utilService.showError("Error:Connecting to Device");
+      this.utilService.showError('Error:Conectándose con el dispositivo');
     });
   }
 
   deviceDisconnected() {
     // Unsubscribe from data receiving
     this.bluetoothSerial.disconnect();
-    this.utilService.showToast("Device Disconnected");
+    this.utilService.showToast('Dispositivo Desconectado');
   }
 
   handleData(data) {
