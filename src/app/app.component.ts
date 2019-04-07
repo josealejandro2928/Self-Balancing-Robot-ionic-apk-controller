@@ -18,7 +18,7 @@ export class AppComponent {
     {
       title: 'Controladores',
       url: '/controladores',
-      icon: 'list'
+      icon: 'logo-android'
     },
     {
       title: 'Ajuste',

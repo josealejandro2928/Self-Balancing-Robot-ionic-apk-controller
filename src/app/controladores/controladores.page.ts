@@ -13,4 +13,16 @@ export class ControladoresPage implements OnInit {
   ngOnInit() {
   }
 
+  showReactions(event) {
+    console.log(event);
+  }
+
+  like(event) {
+    console.log(event);
+  }
+
+
+
+
+
 }

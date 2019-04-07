@@ -1,6 +1,13 @@
 app-controladores {
-    // .mat-tab-labels {
-    //     text-align: center !important;
-    //     display: block !important;
-    // }
+    .mat-tab-body {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        display: block;
+        overflow: hidden;
+        flex-basis: 100%;
+        padding: 24px;
+    }
 }

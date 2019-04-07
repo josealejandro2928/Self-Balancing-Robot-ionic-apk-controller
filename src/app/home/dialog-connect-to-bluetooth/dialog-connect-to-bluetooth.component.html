@@ -51,21 +51,21 @@
           <span style="font-weight: 600; font-size:15px;">Estado del Robot:</span>
           <ion-list>
             <ion-item>
-              <ion-icon [name]="'paper-plane'" slot="start"></ion-icon>
-              {{'Velocidad linear:'}}
+              <ion-icon [name]="'speedometer'" slot="start"></ion-icon>
+              {{'Velocidad lineal:'}}
               <div class="item-note" slot="end">
                 {{velocidadLinear}}
               </div>
             </ion-item>
             <ion-item>
-              <ion-icon [name]="'football'" slot="start"></ion-icon>
+              <ion-icon ios="ios-speedometer" md="md-speedometer" slot="start"></ion-icon>
               {{'Velocidad angular:'}}
               <div class="item-note" slot="end">
                 {{velocidadAngular}}
               </div>
             </ion-item>
             <ion-item>
-              <ion-icon [name]="'flask'" slot="start"></ion-icon>
+              <ion-icon [name]="'md-calculator'" slot="start"></ion-icon>
               {{'Inclinacion:'}}
               <div class="item-note" slot="end">
                 {{inclinacion}}
