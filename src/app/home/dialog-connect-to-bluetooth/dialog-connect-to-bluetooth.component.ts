@@ -214,13 +214,8 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   }
 
   onCloseDialog(): void {
-    this.bluetoothSerial.clear().then(() => {
-      this.dialogRef.close();
-    })
-
+    this.dialogRef.close();
   }
-
-
 
 }
 

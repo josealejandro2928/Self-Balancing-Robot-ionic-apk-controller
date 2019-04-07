@@ -16,9 +16,14 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
+      title: 'Controladores',
+      url: '/controladores',
       icon: 'list'
+    },
+    {
+      title: 'Ajuste',
+      url: '/ajuste',
+      icon: 'build'
     }
   ];
 

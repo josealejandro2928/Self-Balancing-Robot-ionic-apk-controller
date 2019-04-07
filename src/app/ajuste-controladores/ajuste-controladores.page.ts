@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: 'list.page.html',
-  styleUrls: ['list.page.scss']
+  selector: 'app-ajuste-controladores',
+  templateUrl: 'ajuste-controladores.page.html',
+  styleUrls: ['ajuste-controladores.page.scss']
 })
-export class ListPage implements OnInit {
+export class AjusteControladoresPage implements OnInit {
   private selectedItem: any;
   private icons = [
     'flask',

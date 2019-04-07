@@ -12,9 +12,12 @@ const routes: Routes = [
     loadChildren: './home/home.module#HomePageModule'
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+    path: 'ajuste',
+    loadChildren: './ajuste-controladores/ajuste-controladores.module#AjusteControladoresPageModule'
+  },
+  { path: 'controladores',
+    loadChildren: './controladores/controladores.module#ControladoresPageModule'
+   }
 ];
 
 @NgModule({
