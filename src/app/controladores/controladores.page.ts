@@ -39,19 +39,8 @@ export class ControladoresPage implements OnInit, AfterViewInit {
       this.end = Date.now();
       this.elapsedTime = this.end - this.start;
     });
-
-    console.log(this.myBtn);
+  
   }
-
-
-
-
-
-
-
-  // myBtn.addEventListener('click', function(e) {
-  //   alert('Corto click!');
-  // });
 
 
   ////////////Tabs////////
