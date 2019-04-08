@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-import { MatDialog } from '@angular/material';
-import { DialogConnectToBluetoothComponent } from './dialog-connect-to-bluetooth/dialog-connect-to-bluetooth.component';
+
+
 
 
 @Component({
@@ -15,7 +15,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   _unsubscribeall: Subject<any>;
 
-  constructor(private bluetoothSerial: BluetoothSerial, public dialog: MatDialog) {
+  constructor(private bluetoothSerial: BluetoothSerial) {
     this._unsubscribeall = new Subject();
 
   }
@@ -32,21 +32,21 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
 
-  onConectBluetooth(): void {
-    console.log('pepe')
-    const dialogRef = this.dialog.open(DialogConnectToBluetoothComponent, {
-      panelClass: 'app-dialog-connect-to-bluetooth',
-      maxWidth: '95vw',
-      maxHeight: '100vh',
-      data: {
+  // onConectBluetooth(): void {
+  //   console.log('pepe')
+  //   const dialogRef = this.dialog.open(DialogConnectToBluetoothComponent, {
+  //     panelClass: 'app-dialog-connect-to-bluetooth',
+  //     maxWidth: '95vw',
+  //     maxHeight: '100vh',
+  //     data: {
 
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //     }
+  //   });
 
-  }
+  // }
 
 }

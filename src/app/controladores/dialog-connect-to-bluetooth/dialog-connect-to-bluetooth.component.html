@@ -37,9 +37,14 @@
       </ion-row>
 
 
-      <button mat-raised-button style="margin-top:10px;" full [disabled]="MacAddress == '' || !MacAddress"
-        (click)="Connect2Device()" color="primary">
+      <button mat-raised-button class="buttom-conection" full [disabled]="!listToggle || this.utilService.MacAddress" (click)="Connect2Device()"
+        color="primary">
         <ion-icon name="bluetooth"></ion-icon>Connect Bluetooth Devices
+      </button>
+      <button mat-raised-button class="buttom-conection" full
+        [disabled]="!listToggle || this.utilService.MacAddress == '' || !this.utilService.MacAddress"
+        (click)="deviceDisconnected()" color="primary">
+        <ion-icon name="bluetooth"></ion-icon>Disconnect Bluetooth Devices
       </button>
 
       <div style="margin-top: 10px;">

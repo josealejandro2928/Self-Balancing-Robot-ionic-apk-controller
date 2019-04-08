@@ -3,21 +3,37 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <button mat-icon-button style="margin-right: 10px;" slot="end" (click)="onConectBluetooth()">
+      <mat-icon style="font-size:32px;">bluetooth</mat-icon>
+    </button>
     <ion-title>Controladores</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <mat-tab-group color="primary" backgroundColor="primary" fxFlex="100">
+
+  <mat-tab-group (selectedTabChange)="OnTabChange($event.index)" color="primary" backgroundColor="primary" fxFlex="100">
     <mat-tab label="MANUAL">
-      <!-- <button mat-raised-button color="primary">Action</button> -->
-      
+      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+        <button mat-raised-button color="primary" (mousedown)="mouseDown()" (mouseup)="mouseUp()">Action</button>
+      </div>
+
+      <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
+        <app-state-table #state0 [currentIndex]="TabsIndex" [index]="0"></app-state-table>
+      </div>
 
     </mat-tab>
+
     <mat-tab label="AUTOMÁTICO">
-
+      <div fxLayout="row" class="estado-automatico" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
+        <app-state-table #state1 [currentIndex]="TabsIndex" [index]="1"></app-state-table>
+      </div>
     </mat-tab>
+
     <mat-tab label="POINT TRACKER">
+      <div fxLayout="row" class="estado-point-tracker" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
+        <app-state-table #state2 [currentIndex]="TabsIndex" [index]="2"></app-state-table>
+      </div>
 
     </mat-tab>
   </mat-tab-group>

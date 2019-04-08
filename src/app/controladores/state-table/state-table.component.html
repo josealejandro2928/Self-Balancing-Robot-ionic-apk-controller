@@ -1,0 +1,62 @@
+<mat-toolbar-row>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
+    <span class="mat-title">Variables del Robot</span>
+  </div>
+</mat-toolbar-row>
+
+<mat-table class="estado-table" [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Variable Column -->
+  <ng-container matColumnDef="variable">
+    <mat-header-cell *matHeaderCellDef>
+      {{'Variable'}}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span>{{element.variableTitle}}</span>
+    </mat-cell>
+  </ng-container>
+
+
+  <!-- Average Prive Column -->
+  <ng-container matColumnDef="valor">
+    <mat-header-cell *matHeaderCellDef>
+      <span style="margin-left: 20px;">Valor</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span style="margin-left:25px;">
+        {{element.valor.toFixed(2)}}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- StockMin Column -->
+  <ng-container matColumnDef="media">
+    <mat-header-cell *matHeaderCellDef>
+      <span style="margin-left:6px; ">Promedio</span>
+
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span style="margin-left:20px;">
+        {{element.media.toFixed(2)}}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="varianza">
+    <mat-header-cell *matHeaderCellDef>
+      <span style="margin-left:20px;">Varianza</span>
+
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span style="margin-left:27px;">
+        {{element.varianza.toFixed(2)}}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let element; columns: displayedColumns;" class="variable">
+  </mat-row>
+
+</mat-table>

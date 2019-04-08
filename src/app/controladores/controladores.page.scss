@@ -10,4 +10,20 @@ app-controladores {
         flex-basis: 100%;
         padding: 24px;
     }
+
+    .mat-tab-label-content {
+        font-weight: 600;
+    }
+
+    .estado-manual {
+        margin-top: 50px !important;
+    }
+
+    .estado-point-tracker {
+        margin-top: 50px !important;
+    }
+
+    .estado-automatico {
+        margin-top: 50px !important;
+    }
 }

@@ -42,6 +42,10 @@ export class UtilFunctionsService {
     return newUint;
   }
 
+  CopyObject(data: any) {
+    return JSON.parse(JSON.stringify(data));
+  }
+
   ////////Toast///////
 
   showError(error) {

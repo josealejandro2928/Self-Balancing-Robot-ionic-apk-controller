@@ -19,7 +19,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class DialogConnectToBluetoothComponent implements OnInit {
 
   pairedList: PairedList[] = [];
-  listToggle = true;
+  listToggle = false;
   pairedDeviceID = 0;
   dataSend = 0.0;
   MacAddress = '';
@@ -38,7 +38,7 @@ export class DialogConnectToBluetoothComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogConnectToBluetoothComponent>,
     @Inject(MAT_DIALOG_DATA) private dataDialog: any, private spinnerDialog: SpinnerDialog,
-    private bluetoothSerial: BluetoothSerial, private utilService: UtilFunctionsService) {
+    private bluetoothSerial: BluetoothSerial, public utilService: UtilFunctionsService) {
     this.dialogRef.disableClose = true;
     if (utilService.MacAddress) {
       this.SelectedDevice.select(utilService.MacAddress);
@@ -49,12 +49,15 @@ export class DialogConnectToBluetoothComponent implements OnInit {
     this.bluetoothSerial.isConnected().then(success => {
       this.utilService.showToast('Dispositivo Conectado');
       this.spinnerDialog.hide();
+      this.listToggle = true;
       this.checkBluetoothEnabled();
 
     }, error => {
       this.utilService.showError('Dispositivo no conectado');
       this.spinnerDialog.hide();
       this.checkBluetoothEnabled();
+      this.utilService.MacAddress = null;
+      this.listToggle = false;
     });
 
   }
@@ -73,6 +76,8 @@ export class DialogConnectToBluetoothComponent implements OnInit {
       this.listPairedDevices();
     }, error => {
       this.utilService.showError('Por favor habilite el Bluetooth');
+      this.utilService.MacAddress = null;
+      this.listToggle = false;
     });
   }
 
@@ -82,6 +87,8 @@ export class DialogConnectToBluetoothComponent implements OnInit {
       this.listToggle = true;
     }, error => {
       this.utilService.showError('Por favor habilite el Bluetooth');
+      this.utilService.MacAddress = null;
+      this.listToggle = false;
     });
   }
 
@@ -119,17 +126,20 @@ export class DialogConnectToBluetoothComponent implements OnInit {
     }, error => {
       this.spinnerDialog.hide();
       this.utilService.showError('Error:Conectándose con el dispositivo');
+      this.utilService.MacAddress = null;
     });
   }
 
   deviceDisconnected() {
     // Unsubscribe from data receiving
-    this.bluetoothSerial.disconnect();
-    this.utilService.showToast('Dispositivo Desconectado');
-  }
+    this.bluetoothSerial.disconnect().then(success => {
+      this.utilService.showToast('Dispositivo Desconectado');
+      this.utilService.MacAddress = null;
+    },
+      error => {
+        this.utilService.showError('Error desconectando el dispositivo');
+      });
 
-  handleData(data) {
-    this.utilService.showToast(data);
   }
 
   ////////////////////////////////

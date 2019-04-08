@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'controladores',
     pathMatch: 'full'
   },
   {
@@ -15,13 +15,14 @@ const routes: Routes = [
     path: 'ajuste',
     loadChildren: './ajuste-controladores/ajuste-controladores.module#AjusteControladoresPageModule'
   },
-  { path: 'controladores',
+  {
+    path: 'controladores',
     loadChildren: './controladores/controladores.module#ControladoresPageModule'
-   }
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
