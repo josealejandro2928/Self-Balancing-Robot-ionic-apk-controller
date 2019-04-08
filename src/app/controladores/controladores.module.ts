@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControladoresPage } from './controladores.page';
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 /// ------------- Material Imports------------ /////
 import { MatButtonModule, MatCheckboxModule, MatTabsModule } from '@angular/material';
@@ -49,5 +50,6 @@ const routes: Routes = [
   ],
   declarations: [ControladoresPage, StateTableComponent, ManualComponent, DialogConnectToBluetoothComponent],
   entryComponents: [DialogConnectToBluetoothComponent],
+  providers: [Vibration]
 })
 export class ControladoresPageModule { }

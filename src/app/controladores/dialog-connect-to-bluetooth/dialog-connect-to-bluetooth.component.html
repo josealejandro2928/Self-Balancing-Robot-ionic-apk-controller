@@ -37,7 +37,7 @@
       </ion-row>
 
 
-      <button mat-raised-button class="buttom-conection" full [disabled]="!listToggle || this.utilService.MacAddress" (click)="Connect2Device()"
+      <button mat-raised-button class="buttom-conection" full [disabled]="!listToggle || this.utilService.MacAddress || this.MacAddress == '' " (click)="Connect2Device()"
         color="primary">
         <ion-icon name="bluetooth"></ion-icon>Connect Bluetooth Devices
       </button>
@@ -77,7 +77,7 @@
               </div>
             </ion-item>
           </ion-list>
-          <button [disabled]="MacAddress == '' || !MacAddress" id="SendBluetooth" mat-raised-button full
+          <button [disabled]="this.utilService.MacAddress == '' || !this.utilService.MacAddress" id="SendBluetooth" mat-raised-button full
             (click)="getEstado()" color="primary">
             <ion-icon name="send"></ion-icon>
             Obtener Estado
@@ -105,7 +105,7 @@
             </mat-form-field>
           </div>
           <button
-            [disabled]="MacAddress == '' || !MacAddress || sp_angular_velocityForm.invalid || sp_velocityForm.invalid  "
+            [disabled]="this.utilService.MacAddress == '' || !this.utilService.MacAddress || sp_angular_velocityForm.invalid || sp_velocityForm.invalid  "
             id="SendBluetooth" mat-raised-button full (click)="sendSetPoint()" color="primary">
             <ion-icon name="send"></ion-icon>
             Enviar Referencias
@@ -139,7 +139,7 @@
             <span>Kd_w:</span>
             <span>{{Kd_w}}</span>
           </div>
-          <button style="margin-top:10px;" [disabled]="MacAddress == '' || !MacAddress" id=" SendBluetooth"
+          <button style="margin-top:10px;" [disabled]="this.utilService.MacAddress == '' || !this.utilService.MacAddress" id=" SendBluetooth"
             mat-raised-button full (click)="sendGetAllPIDConstantes()" color="primary">
             <ion-icon name="send"></ion-icon>
             Obtener constantes

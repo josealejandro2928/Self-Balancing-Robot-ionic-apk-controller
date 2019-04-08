@@ -14,8 +14,9 @@
 
   <mat-tab-group (selectedTabChange)="OnTabChange($event.index)" color="primary" backgroundColor="primary" fxFlex="100">
     <mat-tab label="MANUAL">
-      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-        <button mat-raised-button color="primary" (mousedown)="mouseDown()" (mouseup)="mouseUp()">Action</button>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+        <button mat-raised-button color="primary" id="miBoton">Action</button>
+        <span class="mat-body-1">{{'Press Time: '+ this.elapsedTime}}</span>
       </div>
 
       <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">

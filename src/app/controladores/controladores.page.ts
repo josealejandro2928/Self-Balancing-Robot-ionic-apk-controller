@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogConnectToBluetoothComponent } from './dialog-connect-to-bluetooth/dialog-connect-to-bluetooth.component';
 import { UtilFunctionsService } from './../ComomServices/util-functions.service';
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 @Component({
   selector: 'app-controladores',
@@ -9,12 +10,15 @@ import { UtilFunctionsService } from './../ComomServices/util-functions.service'
   styleUrls: ['./controladores.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ControladoresPage implements OnInit {
+export class ControladoresPage implements OnInit, AfterViewInit {
   start: any;
   end: any;
   TabsIndex = 0;
+  elapsedTime = 0;
+  myBtn: any = null;
 
-  constructor(public dialog: MatDialog, private utilService: UtilFunctionsService) {
+  constructor(public dialog: MatDialog, private utilService: UtilFunctionsService,
+    private vibration: Vibration) {
     if (!this.utilService.MacAddress) {
       this.utilService.showError('Conéctese con el bluetooth');
     }
@@ -22,19 +26,32 @@ export class ControladoresPage implements OnInit {
 
   ngOnInit() {
 
-
   }
 
-  mouseDown(): void {
-    this.start = Date.now();
+  ngAfterViewInit() {
+    this.myBtn = document.getElementById('miBoton');
+    this.myBtn.addEventListener('touchstart', () => {
+      this.start = Date.now();
+      this.vibration.vibrate(250);
+    });
 
+    this.myBtn.addEventListener('touchend', () => {
+      this.end = Date.now();
+      this.elapsedTime = this.end - this.start;
+    });
+
+    console.log(this.myBtn);
   }
 
-  mouseUp(): void {
-    this.end = Date.now();
-    console.log(this.end - this.start);
 
-  }
+
+
+
+
+
+  // myBtn.addEventListener('click', function(e) {
+  //   alert('Corto click!');
+  // });
 
 
   ////////////Tabs////////
