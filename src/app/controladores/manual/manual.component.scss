@@ -1,0 +1,66 @@
+app-manual {
+    width: 100%;
+
+    .GamePad {
+        background-color: #263238 !important;
+        border-radius: 36%;
+
+        #upBtn {
+            background-color: #90a4ae !important;
+            min-width: 50px;
+            width: 90px;
+            height: 60px;
+            margin-top: 8px;
+            border-radius: 25%;
+        }
+
+        #downBtn {
+            background-color: #90a4ae !important;
+            min-width: 50px;
+            width: 90px;
+            height: 60px;
+            margin-bottom: 8px;
+            border-radius: 25%;
+        }
+
+        #leftBtn {
+            background-color: #90a4ae !important;
+            margin-right: 10px;
+            width: 90px;
+            height: 60px;
+            min-width: 10px;
+            border-radius: 25%;
+        }
+
+        #rightBtn {
+            background-color: #90a4ae !important;
+            margin-left: 10px;
+            width: 90px;
+            height: 60px;
+            min-width: 10px;
+            border-radius: 25%;
+        }
+
+        .mat-icon {
+            font-size: 24px;
+            background-repeat: no-repeat;
+            display: inline-block;
+            fill: currentColor;
+            height: 24px;
+            width: 24px;
+        }
+
+        #centerBtn {
+            background-color: #455a64 !important;
+            min-width: 50px;
+            min-height: 50px;
+            height: 54px;
+            width: 54px;
+        }
+
+    }
+
+
+
+
+}

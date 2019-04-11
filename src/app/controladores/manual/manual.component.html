@@ -1,3 +1,25 @@
-<p>
-  manual works!
-</p>
+<div class="GamePad mat-elevation-z4">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <button mat-raised-button class="mat-elevation-z32" color="primary" id="upBtn">
+      <mat-icon class="mat-18">arrow_upward</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayout="row" style="margin-top:10px;" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <button mat-raised-button class="mat-elevation-z32" color="primary" id="leftBtn">
+      <mat-icon class="mat-18">arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button class="mat-elevation-z8" id="centerBtn">
+      <mat-icon class="mat-18">joystick</mat-icon>
+    </button>
+    <button mat-raised-button class="mat-elevation-z32" color="primary" id="rightBtn">
+      <mat-icon class="iconRight">arrow_forward</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayout="row" style="margin-top:10px;" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <button mat-raised-button class="mat-elevation-z32" color="primary" id="downBtn">
+      <mat-icon class="mat-18">arrow_downward</mat-icon>
+    </button>
+  </div>
+</div>

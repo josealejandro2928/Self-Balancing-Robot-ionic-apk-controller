@@ -3,10 +3,19 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <button mat-icon-button style="margin-right: 10px;" slot="end" (click)="onConectBluetooth()">
-      <mat-icon style="font-size:32px;">bluetooth</mat-icon>
-    </button>
     <ion-title>Controladores</ion-title>
+    <button mat-icon-button style="margin-right: 10px;" slot="end" (click)="onConectBluetooth()">
+      <mat-icon style="font-size:24px;">bluetooth</mat-icon>
+    </button>
+
+    <button style="margin-right: 20px;" mat-icon-button slot="end">
+      <span style="font-size:14px;">{{this.utilService.bateria.toFixed(0)+'%'}}</span>
+      <mat-icon *ngIf="this.utilService.bateria >=50 && this.utilService.bateria <=99" style="font-size:24px;">
+        battery_full</mat-icon>
+      <mat-icon *ngIf="this.utilService.bateria === 100" style="font-size:24px;">battery_charging_full</mat-icon>
+      <mat-icon *ngIf="this.utilService.bateria < 50 " style="font-size:24px;">battery_alert</mat-icon>
+    </button>
+
   </ion-toolbar>
 </ion-header>
 
@@ -14,11 +23,7 @@
 
   <mat-tab-group (selectedTabChange)="OnTabChange($event.index)" color="primary" backgroundColor="primary" fxFlex="100">
     <mat-tab label="MANUAL">
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-        <button mat-raised-button color="primary" id="miBoton">Action</button>
-        <span class="mat-body-1">{{'Press Time: '+ this.elapsedTime}}</span>
-      </div>
-
+      <app-manual [currentIndex]="TabsIndex" [index]="0"></app-manual>
       <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
         <app-state-table #state0 [currentIndex]="TabsIndex" [index]="0"></app-state-table>
       </div>

@@ -26,6 +26,7 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   velocidadLinear = 0.00;
   velocidadAngular = 0.00;
   inclinacion = 0.00;
+  bateria = 0.0;
   Kc_i = 0.0; Kc_v = 0.0; Kc_w = 0.0;
   Ki_i = 0.0; Ki_v = 0.0; Ki_w = 0.0;
   Kd_i = 0.0; Kd_v = 0.0; Kd_w = 0.0;
@@ -152,14 +153,16 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   getEstado(): void {
     this.utilService.getRobotState().then(() => {
       let estado = [];
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 4; i++) {
         this.bluetoothSerial.readUntil('\n').then((data: String) => {
           if (data && data !== '' && data.length > 1) {
             estado.push(data);
-            if (i === 2) {
-              this.velocidadLinear = estado[0];
-              this.velocidadAngular = estado[1];
-              this.inclinacion = estado[2];
+            if (i === 3) {
+              this.velocidadLinear = parseFloat(estado[0]);
+              this.velocidadAngular = parseFloat(estado[1]);
+              this.inclinacion = parseFloat(estado[2]);
+              this.bateria = parseFloat(estado[3]);
+              this.utilService.bateria = parseFloat(estado[3]);
               this.bluetoothSerial.clear().then(() => { });
             }
           }

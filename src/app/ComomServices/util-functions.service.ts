@@ -20,8 +20,10 @@ export class UtilFunctionsService {
   SET_PID_K_ANGULAR_VELOCITY = 'G';
   GET_PID_K_ANGULAR_VELOCITY = 'H';
   ///////////////////////////////////////
+  bateria: number;
 
   constructor(private bluetoothSerial: BluetoothSerial, private toastr: ToastrService) {
+    this.bateria = 0.0;
 
   }
 
