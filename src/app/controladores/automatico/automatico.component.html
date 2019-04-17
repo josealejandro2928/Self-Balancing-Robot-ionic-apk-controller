@@ -1,0 +1,56 @@
+<div class="content">
+  <h5 fxLayoutAlign="center center">Referencias de velocidad</h5>
+  <mat-divider></mat-divider>
+  <form [formGroup]="this.ReferenciaVelocidadForm">
+    <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+      <mat-form-field appearance="outline" fxFlex="47">
+        <mat-label>Vel Lineal </mat-label>
+        <input type="number" placeholder="Velocidad Lineal"
+          [formControl]="this.ReferenciaVelocidadForm.controls['spLinearVel']" required matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="47">
+        <mat-label>Vel Angular</mat-label>
+        <input type="number" placeholder="Velocidad Angular"
+          [formControl]="this.ReferenciaVelocidadForm.controls['spAngularVel']" required matInput>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+      <button mat-raised-button style="margin-right: 10px;" [disabled]="this.ReferenciaVelocidadForm.invalid"
+        (click)="onEnviarReferenciasVelocidades()" class="startBtn">Enviar</button>
+      <button mat-raised-button (click)="onParaVelocidades()" class="stopBtn">Parar</button>
+    </div>
+
+  </form>
+
+
+
+  <h5 fxLayoutAlign="center center">Ir a un punto</h5>
+  <mat-divider></mat-divider>
+  <form [formGroup]="this.PointTrackerForm">
+    <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+      <mat-form-field appearance="outline" fxFlex="47">
+        <mat-label>Posición en X</mat-label>
+        <input type="number" placeholder="Posición en X" [formControl]="this.PointTrackerForm.controls['spPositionX']"
+          required matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="47">
+        <mat-label>Posición en Y</mat-label>
+        <input type="number" placeholder="Posición en Y" [formControl]="this.PointTrackerForm.controls['spPositionY']"
+          required matInput>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+      <button mat-raised-button style="margin-right: 10px;" [disabled]="this.PointTrackerForm.invalid"
+        (click)="onEnviarReferenciasVelocidades()" class="startBtn">Enviar</button>
+      <button mat-raised-button (click)="onParaPointTracker()" style="margin-right: 10px;"
+        class="stopBtn">Parar</button>
+      <button mat-raised-button color="primary" (click)="onRestarPointTracker()">
+        <mat-icon style=" font-size: 20px;">refresh</mat-icon>
+      </button>
+
+    </div>
+  </form>
+
+
+</div>

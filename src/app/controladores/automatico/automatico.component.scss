@@ -1,0 +1,21 @@
+app-automatico {
+    width: 100% !important;
+
+    .content {
+        .mat-form-field-wrapper {
+            margin: 0.25em 0;
+            padding-bottom: 5px;
+        }
+
+        .stopBtn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .startBtn {
+            background-color: #4caf50;
+            color: white;
+        }
+    }
+
+}

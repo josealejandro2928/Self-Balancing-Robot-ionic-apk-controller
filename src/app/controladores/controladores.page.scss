@@ -1,4 +1,9 @@
 app-controladores {
+    .mat-tab-labels {
+        display: block !important;
+        text-align: center !important;
+    }
+
     .mat-tab-body {
         top: 0;
         left: 0;
@@ -8,7 +13,7 @@ app-controladores {
         display: block;
         overflow: hidden;
         flex-basis: 100%;
-        padding: 24px;
+        padding: 10px 16px 16px 16px;
     }
 
     .mat-tab-label-content {
@@ -19,11 +24,7 @@ app-controladores {
         margin-top: 15px !important;
     }
 
-    .estado-point-tracker {
-        margin-top: 50px !important;
-    }
-
     .estado-automatico {
-        margin-top: 50px !important;
+        margin-top: 15px !important;
     }
 }

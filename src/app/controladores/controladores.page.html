@@ -22,6 +22,7 @@
 <ion-content>
 
   <mat-tab-group (selectedTabChange)="OnTabChange($event.index)" color="primary" backgroundColor="primary" fxFlex="100">
+    
     <mat-tab label="MANUAL">
       <app-manual [currentIndex]="TabsIndex" [index]="0"></app-manual>
       <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
@@ -31,16 +32,11 @@
     </mat-tab>
 
     <mat-tab label="AUTOMÁTICO">
+      <app-automatico [currentIndex]="TabsIndex" [index]="1"></app-automatico>
       <div fxLayout="row" class="estado-automatico" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
         <app-state-table #state1 [currentIndex]="TabsIndex" [index]="1"></app-state-table>
       </div>
     </mat-tab>
 
-    <mat-tab label="POINT TRACKER">
-      <div fxLayout="row" class="estado-point-tracker" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <app-state-table #state2 [currentIndex]="TabsIndex" [index]="2"></app-state-table>
-      </div>
-
-    </mat-tab>
   </mat-tab-group>
 </ion-content>

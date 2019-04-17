@@ -3,25 +3,126 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+
     <ion-title>
-      Ajuste de Controladores
+      Ajuste de parámetros
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
-      <div class="item-note" slot="end">
-        {{item.note}}
+  <div class="PaginaContenido">
+    <h5 fxLayoutAlign="center center">Ajuste de controladores</h5>
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="this.PIDConstantForm">
+      <span style="padding-top: 12px;" fxLayoutAlign="start start">PID: Inclinación</span>
+
+      <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KC_i</mat-label>
+          <input type="number" placeholder="KC_i" [formControl]="this.PIDConstantForm.controls['Kc_i']" required
+            matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KI_i</mat-label>
+          <input type="number" placeholder="KI_i" [formControl]="this.PIDConstantForm.controls['Ki_i']" required
+            matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KD_i</mat-label>
+          <input type="number" placeholder="KD_i" [formControl]="this.PIDConstantForm.controls['Kd_i']" required
+            matInput>
+        </mat-form-field>
       </div>
-    </ion-item>
-  </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
+      <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+        <button mat-raised-button style="margin-right: 10px;" (click)="onEnviarConstantesPID_I()" [disabled]="this.PIDConstantForm.controls['Kc_i'].invalid ||
+        this.PIDConstantForm.controls['Ki_i'].invalid || this.PIDConstantForm.controls['Kd_i'].invalid "
+          color="primary">Enviar</button>
+        <button mat-raised-button (click)="onObtenerConstantesPID_I()" color="primary">Obtener</button>
+      </div>
+      <mat-divider style="margin-top:8px;"></mat-divider>
+
+      <span style="padding-top: 12px;" fxLayoutAlign="start start">PID: Velocidad Lineal</span>
+
+      <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KC_V</mat-label>
+          <input type="number" placeholder="KC_V" [formControl]="this.PIDConstantForm.controls['Kc_v']" required
+            matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KI_V</mat-label>
+          <input type="number" placeholder="KI_V" [formControl]="this.PIDConstantForm.controls['Ki_v']" required
+            matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KD_V</mat-label>
+          <input type="number" placeholder="KD_V" [formControl]="this.PIDConstantForm.controls['Kd_v']" required
+            matInput>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+        <button mat-raised-button style="margin-right: 10px;" (click)="onEnviarConstantesPID_V()" [disabled]="this.PIDConstantForm.controls['Kc_v'].invalid ||
+        this.PIDConstantForm.controls['Ki_v'].invalid || this.PIDConstantForm.controls['Kd_v'].invalid "
+          color="primary">Enviar</button>
+        <button mat-raised-button (click)="onObtenerConstantesPID_V()" color="primary">Obtener</button>
+      </div>
+      <mat-divider style="margin-top:8px;"></mat-divider>
+
+      <span style="padding-top: 12px;" fxLayoutAlign="start start">PID: Velocidad de Giro</span>
+
+      <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KC_W</mat-label>
+          <input type="number" placeholder="KC_W" [formControl]="this.PIDConstantForm.controls['Kc_w']" required
+            matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KI_W</mat-label>
+          <input type="number" placeholder="KI_W" [formControl]="this.PIDConstantForm.controls['Ki_w']" required
+            matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30">
+          <mat-label>KD_W</mat-label>
+          <input type="number" placeholder="KD_W" [formControl]="this.PIDConstantForm.controls['Kd_i']" required
+            matInput>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+        <button mat-raised-button [disabled]="this.PIDConstantForm.controls['Kc_w'].invalid ||
+          this.PIDConstantForm.controls['Ki_w'].invalid || this.PIDConstantForm.controls['Kd_w'].invalid "
+          style="margin-right: 10px;" (click)="onEnviarConstantesPID_W()" color="primary">Enviar</button>
+        <button mat-raised-button (click)="onObtenerConstantesPID_W()" color="primary">Obtener</button>
+      </div>
+      <mat-divider style="margin-top:8px;"></mat-divider>
+
+    </form>
+    <h5 fxLayoutAlign="center center">Ajuste de Párametros del Robot</h5>
+    <form [formGroup]="this.ParametrosFrom">
+      <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+        <mat-form-field appearance="outline" fxFlex="47">
+          <mat-label>Radio-Ruedas [m/s]</mat-label>
+          <input type="number" placeholder="Radio-Ruedas [m/s]"
+            [formControl]="this.ParametrosFrom.controls['radioRuedas']" required matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="47">
+          <mat-label>Offset-Inclinación[grad]</mat-label>
+          <input type="number" placeholder="Offset-Inclinación[grad]"
+            [formControl]="this.ParametrosFrom.controls['anguloOffset']" required matInput>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+        <button mat-raised-button [disabled]="this.ParametrosFrom.invalid" style="margin-right: 10px;"
+          (click)="onEnviarParametrosRobot()" color="primary">Enviar</button>
+        <button mat-raised-button (click)="onObtenerParametrosRobot()" color="primary">Obtener</button>
+      </div>
+      <mat-divider style="margin-top:8px;"></mat-divider>
+    </form>
+
+  </div>
+
+
+
+
 </ion-content>

@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { DialogConnectToBluetoothComponent } from './dialog-connect-to-bluetooth/dialog-connect-to-bluetooth.component';
 import { StateTableComponent } from './state-table/state-table.component';
 import { ManualComponent } from './manual/manual.component';
+import { AutomaticoComponent } from './automatico/automatico.component';
 
 
 const routes: Routes = [
@@ -48,7 +49,7 @@ const routes: Routes = [
     MatDividerModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ControladoresPage, StateTableComponent, ManualComponent, DialogConnectToBluetoothComponent],
+  declarations: [ControladoresPage, StateTableComponent, ManualComponent, AutomaticoComponent, DialogConnectToBluetoothComponent],
   entryComponents: [DialogConnectToBluetoothComponent],
   providers: [Vibration]
 })

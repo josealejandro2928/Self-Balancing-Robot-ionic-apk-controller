@@ -1,39 +1,76 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-ajuste-controladores',
   templateUrl: 'ajuste-controladores.page.html',
-  styleUrls: ['ajuste-controladores.page.scss']
+  styleUrls: ['ajuste-controladores.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AjusteControladoresPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+
+  PIDConstantForm: FormGroup;
+  ParametrosFrom: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.BuildForms();
+
   }
 
   ngOnInit() {
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
+
+  BuildForms(): void {
+    this.PIDConstantForm = this.fb.group({
+      Kc_i: [23.75, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Ki_i: [20.5, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Kd_i: [1.75, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Kc_v: [9.25, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Ki_v: [0.0, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Kd_v: [0.15, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Kc_w: [18.5, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Ki_w: [10.5, [Validators.required, Validators.min(0.0), Validators.max(50.0)]],
+      Kd_w: [0.125, [Validators.required, Validators.min(0.0), Validators.max(50.0)]]
+    });
+
+    this.ParametrosFrom = this.fb.group({
+      radioRuedas: [0.0475, [Validators.required, Validators.min(0.0), Validators.max(0.25)]],
+      anguloOffset: [-1.25, [Validators.required, Validators.min(-10.0), Validators.max(10.0)]]
+    });
+
+  }
+
+  ////////////////////////////////////////
+  onEnviarConstantesPID_I(): void {
+
+  }
+
+  onObtenerConstantesPID_I(): void {
+
+  }
+
+  onEnviarConstantesPID_V(): void {
+
+  }
+
+  onObtenerConstantesPID_V(): void {
+
+  }
+  onEnviarConstantesPID_W(): void {
+
+  }
+
+  onObtenerConstantesPID_W(): void {
+
+  }
+
+  onEnviarParametrosRobot(): void {
+
+  }
+
+  onObtenerParametrosRobot(): void {
+
+  }
+
+
 }

@@ -19,7 +19,7 @@
     <div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
 
       <button mat-raised-button full (click)="listPairedDevices()" color="primary">
-        <ion-icon name="refresh"></ion-icon> Refresh Bluetooth Devices
+        <ion-icon name="refresh"></ion-icon> Obtener dispositivos vinvulados
       </button>
 
       <ion-row>
@@ -40,12 +40,12 @@
       <button mat-raised-button class="buttom-conection" full
         [disabled]="!listToggle || this.utilService.MacAddress || this.MacAddress == '' " (click)="Connect2Device()"
         color="primary">
-        <ion-icon name="bluetooth"></ion-icon>Connect Bluetooth Devices
+        <ion-icon name="bluetooth"></ion-icon>Conectare al dispositivo
       </button>
       <button mat-raised-button class="buttom-conection" full
         [disabled]="!listToggle || this.utilService.MacAddress == '' || !this.utilService.MacAddress"
         (click)="deviceDisconnected()" color="primary">
-        <ion-icon name="bluetooth"></ion-icon>Disconnect Bluetooth Devices
+        <ion-icon name="bluetooth"></ion-icon>Desconectarse del dispositivo
       </button>
 
       <div style="margin-top: 10px;">
