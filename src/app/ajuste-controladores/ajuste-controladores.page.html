@@ -38,7 +38,7 @@
       <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
         <button mat-raised-button style="margin-right: 10px;" (click)="onEnviarConstantesPID_I()" [disabled]="this.PIDConstantForm.controls['Kc_i'].invalid ||
         this.PIDConstantForm.controls['Ki_i'].invalid || this.PIDConstantForm.controls['Kd_i'].invalid "
-          color="primary">Enviar</button>
+          class="startBtn">Enviar</button>
         <button mat-raised-button (click)="onObtenerConstantesPID_I()" color="primary">Obtener</button>
       </div>
       <mat-divider style="margin-top:8px;"></mat-divider>
@@ -65,7 +65,7 @@
       <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
         <button mat-raised-button style="margin-right: 10px;" (click)="onEnviarConstantesPID_V()" [disabled]="this.PIDConstantForm.controls['Kc_v'].invalid ||
         this.PIDConstantForm.controls['Ki_v'].invalid || this.PIDConstantForm.controls['Kd_v'].invalid "
-          color="primary">Enviar</button>
+          class="startBtn">Enviar</button>
         <button mat-raised-button (click)="onObtenerConstantesPID_V()" color="primary">Obtener</button>
       </div>
       <mat-divider style="margin-top:8px;"></mat-divider>
@@ -92,7 +92,7 @@
       <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
         <button mat-raised-button [disabled]="this.PIDConstantForm.controls['Kc_w'].invalid ||
           this.PIDConstantForm.controls['Ki_w'].invalid || this.PIDConstantForm.controls['Kd_w'].invalid "
-          style="margin-right: 10px;" (click)="onEnviarConstantesPID_W()" color="primary">Enviar</button>
+          style="margin-right: 10px;" (click)="onEnviarConstantesPID_W()" class="startBtn">Enviar</button>
         <button mat-raised-button (click)="onObtenerConstantesPID_W()" color="primary">Obtener</button>
       </div>
       <mat-divider style="margin-top:8px;"></mat-divider>
@@ -114,7 +114,7 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
         <button mat-raised-button [disabled]="this.ParametrosFrom.invalid" style="margin-right: 10px;"
-          (click)="onEnviarParametrosRobot()" color="primary">Enviar</button>
+          (click)="onEnviarParametrosRobot()" class="startBtn">Enviar</button>
         <button mat-raised-button (click)="onObtenerParametrosRobot()" color="primary">Obtener</button>
       </div>
       <mat-divider style="margin-top:8px;"></mat-divider>

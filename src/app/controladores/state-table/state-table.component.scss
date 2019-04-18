@@ -1,6 +1,16 @@
 app-state-table {
     width: 100% !important;
 
+    .guardarBtn {
+        border-color: #4caf50 !important;
+        color: #4caf50 !important;
+    }
+
+    .PararBtn {
+        border-color: #f44336 !important;
+        color: #f44336 !important;
+    }
+
     .estado-table {
 
         .mat-header-row {

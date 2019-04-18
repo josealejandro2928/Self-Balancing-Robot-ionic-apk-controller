@@ -30,6 +30,8 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   downBtn: any = null;
   leftBtn: any = null;
   rightBtn: any = null;
+  SAMPLE_TIME = 100;
+
 
   velocity = 0.0;
   angular_velocity = 0.0;
@@ -51,7 +53,7 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
     }
 
     if (this.index === this.currentIndex && this.utilService.MacAddress) {
-      this.Refrescamiento = setInterval(() => this.getButtons(), 125);
+      this.Refrescamiento = setInterval(() => this.getButtons(), this.SAMPLE_TIME);
     } else {
       clearInterval(this.Refrescamiento);
     }

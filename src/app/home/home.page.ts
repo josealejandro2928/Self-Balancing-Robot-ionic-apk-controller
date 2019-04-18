@@ -14,9 +14,11 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 export class HomePage implements OnInit, OnDestroy {
 
   _unsubscribeall: Subject<any>;
+  images: any = [];
 
   constructor(private bluetoothSerial: BluetoothSerial) {
     this._unsubscribeall = new Subject();
+    this.images = ['/assets/MyRobot.svg', '/assets/balanduino.jpg', '/assets/FotoAponer3.jpg']
 
   }
 

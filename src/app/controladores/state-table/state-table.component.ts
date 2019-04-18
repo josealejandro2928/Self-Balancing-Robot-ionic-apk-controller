@@ -34,6 +34,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   bateria = 0.0;
   SAMPLE_TIME = 153;//tiempo en ms
   CANTIDAD_DATA_BLUETOOTH = 4;
+  almacenarDatos = false;
   robotVariables: RobotVariable[] = [
     { variableTitle: 'Inclinación', valor: 0.0, media: 0.0, varianza: 0.0, suma: 0.0, suma_var: 0.0 },
     { variableTitle: 'Velocidad Lineal', valor: 0.0, media: 0.0, varianza: 0.0, suma: 0.0, suma_var: 0.0 },
@@ -146,6 +147,14 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
       this.robotVariables[i].valor = 0.0;
       this.robotVariables[i].varianza = 0.0;
     }
+  }
+
+  onSaveData(): void {
+    this.almacenarDatos = true;
+  }
+
+  onStopGettingData(): void {
+    this.almacenarDatos = false;
   }
 
 

@@ -59,9 +59,17 @@
 
 </mat-table>
 
-<div fxLayout="row" style="margin-top:10px;" fxLayoutAlign="end end" fxLayoutGap="gappx">
+<div fxLayout="row" style="margin-top:10px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+
+  <button mat-stroked-button *ngIf="!this.almacenarDatos" class="guardarBtn" (click)="onSaveData()">
+    <mat-icon style="font-size: 20px;">save</mat-icon>
+    GUARDAR DATOS
+  </button>
+  <button mat-stroked-button *ngIf="this.almacenarDatos" class="PararBtn" (click)="onStopGettingData()">
+    PARAR ADQUISICIÓN
+  </button>
+
   <button mat-raised-button color="primary" (click)="Refresh()">
     <mat-icon style="font-size: 20px;">refresh</mat-icon>
   </button>
-
 </div>

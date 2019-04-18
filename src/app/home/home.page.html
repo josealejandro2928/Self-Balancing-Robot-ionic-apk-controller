@@ -15,13 +15,18 @@
 
 <ion-content>
   <ion-card class="welcome-card">
-    <ion-img src="/assets/MyRobot.svg"></ion-img>
+    <ion-slides loop="true" autoplay="3000" pager>
+      <ion-slide *ngFor="let image of images">
+        <ion-img [src]="image"></ion-img>
+      </ion-slide>
+    </ion-slides>
     <ion-card-header>
       <ion-card-subtitle>Aplicacion desarrollada por Jose Alejandro Concepción</ion-card-subtitle>
       <ion-card-title>Controlador del Robot Autobalanceado</ion-card-title>
     </ion-card-header>
     <ion-card-content>
     </ion-card-content>
+
   </ion-card>
 
 
