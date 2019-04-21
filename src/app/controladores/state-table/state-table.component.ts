@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, OnDestroy, Input, OnChanges, Simp
 import { MatTableDataSource } from '@angular/material';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { UtilFunctionsService } from './../../ComomServices/util-functions.service';
-import { File } from '@ionic-native/file';
+import { File } from '@ionic-native/file/ngx';
 
 
 
@@ -55,7 +55,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
 
 
   constructor(private bluetoothSerial: BluetoothSerial,
-    private utilService: UtilFunctionsService, private file: File) { }
+    private utilService: UtilFunctionsService, private fileHandle: File) { }
 
   ngOnInit() {
     this.InitTable();

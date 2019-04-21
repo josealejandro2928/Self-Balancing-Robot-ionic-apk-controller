@@ -22,6 +22,7 @@ import { DialogConnectToBluetoothComponent } from './dialog-connect-to-bluetooth
 import { StateTableComponent } from './state-table/state-table.component';
 import { ManualComponent } from './manual/manual.component';
 import { AutomaticoComponent } from './automatico/automatico.component';
+import { File } from '@ionic-native/file/ngx';
 
 
 const routes: Routes = [
@@ -51,6 +52,6 @@ const routes: Routes = [
   ],
   declarations: [ControladoresPage, StateTableComponent, ManualComponent, AutomaticoComponent, DialogConnectToBluetoothComponent],
   entryComponents: [DialogConnectToBluetoothComponent],
-  providers: [Vibration]
+  providers: [Vibration, File]
 })
 export class ControladoresPageModule { }
