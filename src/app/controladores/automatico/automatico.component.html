@@ -7,11 +7,21 @@
         <mat-label>Vel Lineal </mat-label>
         <input type="number" placeholder="Velocidad Lineal"
           [formControl]="this.ReferenciaVelocidadForm.controls['spLinearVel']" required matInput>
+        <button *ngIf="this.ReferenciaVelocidadForm.controls['spLinearVel'].value !== 0.0" mat-button matSuffix
+          mat-icon-button aria-label="Clear"
+          (click)="this.ReferenciaVelocidadForm.controls['spLinearVel'].setValue(0.0)">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field appearance="outline" fxFlex="47">
         <mat-label>Vel Angular</mat-label>
         <input type="number" placeholder="Velocidad Angular"
           [formControl]="this.ReferenciaVelocidadForm.controls['spAngularVel']" required matInput>
+        <button *ngIf="this.ReferenciaVelocidadForm.controls['spAngularVel'].value !== 0.0" mat-button matSuffix
+          mat-icon-button aria-label="Clear"
+          (click)="this.ReferenciaVelocidadForm.controls['spAngularVel'].setValue(0.0)">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
@@ -32,17 +42,25 @@
         <mat-label>Posición en X</mat-label>
         <input type="number" placeholder="Posición en X" [formControl]="this.PointTrackerForm.controls['spPositionX']"
           required matInput>
+        <button *ngIf="this.PointTrackerForm.controls['spPositionX'].value !== 0.0" mat-button matSuffix mat-icon-button
+          aria-label="Clear" (click)="this.PointTrackerForm.controls['spPositionX'].setValue(0.0)">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field appearance="outline" fxFlex="47">
         <mat-label>Posición en Y</mat-label>
         <input type="number" placeholder="Posición en Y" [formControl]="this.PointTrackerForm.controls['spPositionY']"
           required matInput>
+        <button *ngIf="this.PointTrackerForm.controls['spPositionY'].value !== 0.0" mat-button matSuffix mat-icon-button
+          aria-label="Clear" (click)="this.PointTrackerForm.controls['spPositionY'].setValue(0.0)">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
       <button mat-raised-button style="margin-right: 10px;" [disabled]="this.PointTrackerForm.invalid"
-        (click)="onEnviarReferenciasVelocidades()" class="startBtn">Enviar</button>
+        (click)="onEnviarReferenciasdePosicion()" class="startBtn">Enviar</button>
       <button mat-raised-button (click)="onParaPointTracker()" style="margin-right: 10px;"
         class="stopBtn">Parar</button>
       <button mat-raised-button color="primary" (click)="onRestarPointTracker()">

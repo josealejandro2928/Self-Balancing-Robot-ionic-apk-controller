@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { UtilFunctionsService } from './../../ComomServices/util-functions.service';
-import { FormBuilder, FormGroup,Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-automatico',
@@ -33,57 +33,68 @@ export class AutomaticoComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.index) {
       this.index = changes.index.currentValue;
     }
-
-    if (this.index === this.currentIndex && this.utilService.MacAddress) {
-      this.Refrescamiento = setInterval(() => this.Run(), 125);
-    } else {
-      clearInterval(this.Refrescamiento);
-    }
-
   }
 
   ngOnDestroy() {
-    clearInterval(this.Refrescamiento);
+    // clearInterval(this.Refrescamiento);
   }
 
   BuildForm(): void {
     this.ReferenciaVelocidadForm = this.fb.group({
-      spLinearVel:[0.0,[Validators.required, Validators.min(-0.8), Validators.max(0.8)]],
-      spAngularVel:[0.0,[Validators.required, Validators.min(-3), Validators.max(3)]], 
+      spLinearVel: [0.0, [Validators.required, Validators.min(-0.8), Validators.max(0.8)]],
+      spAngularVel: [0.0, [Validators.required, Validators.min(-3.0), Validators.max(3.0)]]
     });
 
     this.PointTrackerForm = this.fb.group({
-      spPositionX:[0.0,[Validators.required, Validators.min(-2.0), Validators.max(2.0)]],
-      spPositionY:[0.0,[Validators.required, Validators.min(-2.0), Validators.max(2.0)]], 
+      spPositionX: [0.0, [Validators.required, Validators.min(-2.0), Validators.max(2.0)]],
+      spPositionY: [0.0, [Validators.required, Validators.min(-2.0), Validators.max(2.0)]]
     });
-
-  }
-
-  Run(): void {
 
   }
 
   ///////////Referencias de velocidades/////////
 
   onEnviarReferenciasVelocidades(): void {
+    if (this.utilService.MacAddress) {
+      const lv = this.ReferenciaVelocidadForm.controls['spLinearVel'].value;
+      const wv = this.ReferenciaVelocidadForm.controls['spAngularVel'].value;
+      this.utilService.setRobotSetPointSpeeds(lv, wv);
+    }
 
   }
 
   onParaVelocidades(): void {
+    if (this.utilService.MacAddress) {
+      this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+    }
 
   }
 
   ///////Referencias Posicionales///////
 
   onEnviarReferenciasdePosicion(): void {
+    if (this.utilService.MacAddress) {
+      const posX = this.PointTrackerForm.controls['spPositionX'].value;
+      const posY = this.PointTrackerForm.controls['spPositionY'].value;
+      this.utilService.setRobotPointTraker(posX, posY);
+    }
 
   }
 
   onParaPointTracker(): void {
+    if (this.utilService.MacAddress) {
+      this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+    }
 
   }
 
   onRestarPointTracker(): void {
+    if (this.utilService.MacAddress){
+      this.utilService.resetDynamicalState().then(() => {
+        this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+      });
+    }
+    
 
   }
 

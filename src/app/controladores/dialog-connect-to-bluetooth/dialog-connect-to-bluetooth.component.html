@@ -55,7 +55,9 @@
           </div>
           <mat-divider style="margin-bottom:10px;"></mat-divider>
           <span style="font-weight: 600; font-size:15px;">Estado del Robot:</span>
+          
           <ion-list>
+
             <ion-item>
               <ion-icon [name]="'speedometer'" slot="start"></ion-icon>
               {{'Velocidad lineal:'}}
@@ -79,14 +81,28 @@
             </ion-item>
 
             <ion-item>
-              <ion-icon [name]="'battery-charging'" slot="start"></ion-icon>
-              {{'Batería:'}}
+              <ion-icon [name]="'md-calculator'" slot="start"></ion-icon>
+              {{'Posición X:'}}
               <div class="item-note" slot="end">
-                {{bateria + '%'}}
+                {{this.robot_X}}
               </div>
             </ion-item>
-
+            <ion-item>
+              <ion-icon [name]="'md-calculator'" slot="start"></ion-icon>
+              {{'Posición Y:'}}
+              <div class="item-note" slot="end">
+                {{this.robot_Y}}
+              </div>
+            </ion-item>
+            <ion-item>
+              <ion-icon [name]="'md-calculator'" slot="start"></ion-icon>
+              {{'Orientación:'}}
+              <div class="item-note" slot="end">
+                {{this.robot_Orientacion}}
+              </div>
+            </ion-item>
           </ion-list>
+
           <button [disabled]="this.utilService.MacAddress == '' || !this.utilService.MacAddress" id="SendBluetooth"
             mat-raised-button full (click)="getEstado()" color="primary">
             <ion-icon name="send"></ion-icon>

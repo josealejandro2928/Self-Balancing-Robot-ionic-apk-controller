@@ -9,9 +9,7 @@ export interface RobotVariable {
   variableTitle: string;
   valor: number;
   media: number;
-  varianza: number;
   suma: number;
-  suma_var: number;
 }
 
 
@@ -24,21 +22,33 @@ export interface RobotVariable {
 export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   dataSource = new MatTableDataSource<any>([]);
   counter = 0;
-  displayedColumns = ['variable', 'valor', 'media', 'varianza'];
+  displayedColumns = ['variable', 'valor', 'media'];
   @Input() index;
   @Input() currentIndex;
   Refrescamiento: any;
+
+  CANTIDAD_DATA_BLUETOOTH = 7;
+  ////////////////////////////////////////
   velLineal = 0.0;
   velAngular = 0.0;
   inclinacion = 0.0;
-  bateria = 0.0;
-  SAMPLE_TIME = 153;//tiempo en ms
-  CANTIDAD_DATA_BLUETOOTH = 4;
+  robot_X = 0.0;
+  robot_Y = 0.0;
+  robot_Orientacion = 0.0;
+  aceleracion = 0.0;
+  ////////////////////////////////////////
+
+  SAMPLE_TIME = 125; // tiempo en ms
+
   almacenarDatos = false;
   robotVariables: RobotVariable[] = [
-    { variableTitle: 'Inclinación', valor: 0.0, media: 0.0, varianza: 0.0, suma: 0.0, suma_var: 0.0 },
-    { variableTitle: 'Velocidad Lineal', valor: 0.0, media: 0.0, varianza: 0.0, suma: 0.0, suma_var: 0.0 },
-    { variableTitle: 'Velocidad Angular', valor: 0.0, media: 0.0, varianza: 0.0, suma: 0.0, suma_var: 0.0 },
+    { variableTitle: 'Posición X', valor: 0.0, media: 0.0, suma: 0.0 },
+    { variableTitle: 'Posición Y', valor: 0.0, media: 0.0, suma: 0.0 },
+    { variableTitle: 'Inclinación', valor: 0.0, media: 0.0, suma: 0.0 },
+    { variableTitle: 'Velocidad Lineal', valor: 0.0, media: 0.0, suma: 0.0 },
+    { variableTitle: 'Velocidad Angular', valor: 0.0, media: 0.0, suma: 0.0 },
+    { variableTitle: 'Orientación', valor: 0.0, media: 0.0, suma: 0.0 }
+
   ];
 
 
@@ -90,7 +100,10 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
               this.velLineal = parseFloat(estado[0]);
               this.velAngular = parseFloat(estado[1]);
               this.inclinacion = parseFloat(estado[2]);
-              this.utilService.bateria = this.utilService.CopyObject(parseFloat(estado[3]));
+              this.robot_X = parseFloat(estado[3]);
+              this.robot_Y = parseFloat(estado[4]);
+              this.robot_Orientacion = parseFloat(estado[5]);
+              this.utilService.bateria = this.utilService.CopyObject(parseFloat(estado[6]));
               this.getData();
               this.bluetoothSerial.clear().then(() => { });
             }
@@ -104,27 +117,38 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
     this.counter++;
     if (this.counter) {
 
-      this.robotVariables[0].valor = this.utilService.CopyObject(this.inclinacion);
-      this.robotVariables[0].suma += this.utilService.CopyObject(this.inclinacion);
+      ////// POSICION X ///////
+      this.robotVariables[0].valor = this.utilService.CopyObject(this.robot_X);
+      this.robotVariables[0].suma += this.utilService.CopyObject(this.robot_X);
       this.robotVariables[0].media = this.utilService.CopyObject(this.robotVariables[0].suma) / this.counter;
-      this.robotVariables[0].suma_var += Math.pow((this.inclinacion - this.robotVariables[0].media), 2);
-      this.robotVariables[0].varianza = Math.sqrt((this.robotVariables[0].suma_var) / this.counter);
 
-      /////////////////////////////////////////////////////////////////////////////
-
-      this.robotVariables[1].valor = this.utilService.CopyObject(this.velLineal);
-      this.robotVariables[1].suma += this.utilService.CopyObject(this.velLineal);
+      ////// POSICION Y ///////
+      this.robotVariables[1].valor = this.utilService.CopyObject(this.robot_Y);
+      this.robotVariables[1].suma += this.utilService.CopyObject(this.robot_Y);
       this.robotVariables[1].media = this.utilService.CopyObject(this.robotVariables[1].suma) / this.counter;
-      this.robotVariables[1].suma_var += Math.pow((this.velLineal - this.robotVariables[1].media), 2);
-      this.robotVariables[1].varianza = Math.sqrt((this.robotVariables[1].suma_var) / this.counter);
 
-      /////////////////////////////////////////////////////////////////////////////
-
-      this.robotVariables[2].valor = this.utilService.CopyObject(this.velAngular);
-      this.robotVariables[2].suma += this.utilService.CopyObject(this.velAngular);
+      ////// INCLINACION ///////
+      this.robotVariables[2].valor = this.utilService.CopyObject(this.inclinacion);
+      this.robotVariables[2].suma += this.utilService.CopyObject(this.inclinacion);
       this.robotVariables[2].media = this.utilService.CopyObject(this.robotVariables[2].suma) / this.counter;
-      this.robotVariables[2].suma_var += Math.pow((this.velAngular - this.robotVariables[2].media), 2);
-      this.robotVariables[2].varianza = Math.sqrt((this.robotVariables[2].suma_var) / this.counter);
+
+      ////////VELOCIDAD LINEAL//////
+      this.robotVariables[3].valor = this.utilService.CopyObject(this.velLineal);
+      this.robotVariables[3].suma += this.utilService.CopyObject(this.velLineal);
+      this.robotVariables[3].media = this.utilService.CopyObject(this.robotVariables[3].suma) / this.counter;
+
+      //////VELOCIDAD ANGULAR////////
+      this.robotVariables[4].valor = this.utilService.CopyObject(this.velAngular);
+      this.robotVariables[4].suma += this.utilService.CopyObject(this.velAngular);
+      this.robotVariables[4].media = this.utilService.CopyObject(this.robotVariables[4].suma) / this.counter;
+
+      //////ORIENTACION////////
+      this.robotVariables[5].valor = this.utilService.CopyObject(this.robot_Orientacion);
+      this.robotVariables[5].suma += this.utilService.CopyObject(this.robot_Orientacion);
+      this.robotVariables[5].media = this.utilService.CopyObject(this.robotVariables[5].suma) / this.counter;
+
+      ////////////////////////////////////////////////////////////////////////////////
+
     }
     this.InitTable();
   }
@@ -134,22 +158,22 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
     this.counter = 0;
     this.RestartArrayData();
     if (this.utilService.MacAddress) {
-      this.Refrescamiento = setInterval(() => this.getEstado(), this.SAMPLE_TIME);
+      this.utilService.resetDynamicalState().then(() => {
+        this.Refrescamiento = setInterval(() => this.getEstado(), this.SAMPLE_TIME);
+      });
     }
-
   }
 
   RestartArrayData(): void {
     for (let i = 0; i < this.robotVariables.length; i++) {
+      this.robotVariables[i].valor = 0.0;
       this.robotVariables[i].media = 0.0;
       this.robotVariables[i].suma = 0.0;
-      this.robotVariables[i].suma_var = 0.0;
-      this.robotVariables[i].valor = 0.0;
-      this.robotVariables[i].varianza = 0.0;
     }
   }
 
   onSaveData(): void {
+    this.Refresh();
     this.almacenarDatos = true;
   }
 

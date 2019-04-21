@@ -23,17 +23,25 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   pairedDeviceID = 0;
   dataSend = 0.0;
   MacAddress = '';
+
+  //////// Variables de Estado /////////
   velocidadLinear = 0.00;
   velocidadAngular = 0.00;
   inclinacion = 0.00;
+  robot_X = 0.0;
+  robot_Y = 0.0;
+  robot_Orientacion = 0.0;
+  aceleracion = 0.0;
   bateria = 0.0;
+  //////////////////////////////////////
+
   Kc_i = 0.0; Kc_v = 0.0; Kc_w = 0.0;
   Ki_i = 0.0; Ki_v = 0.0; Ki_w = 0.0;
   Kd_i = 0.0; Kd_v = 0.0; Kd_w = 0.0;
-
   sp_velocityForm = new FormControl(null, [Validators.required, Validators.min(-1.0), Validators.max(1.0)]);
   sp_angular_velocityForm = new FormControl(null, [Validators.required, Validators.min(-5.0), Validators.max(5.0)]);
   SelectedDevice = new SelectionModel(true);
+  CANTIDAD_DATA_BLUETOOTH = 7;
 
 
 
@@ -65,8 +73,7 @@ export class DialogConnectToBluetoothComponent implements OnInit {
 
 
   ngOnInit() {
-    // console.log(this.utilService.convertFloat2Uint8Array(new Float32Array([2.35]), Uint8Array));
-    // console.log(this.utilService.strToBuffer('2.35'));
+
   }
 
 
@@ -147,22 +154,24 @@ export class DialogConnectToBluetoothComponent implements OnInit {
   sendSetPoint(): void {
     let v1 = this.sp_velocityForm.value;
     let v2 = this.sp_angular_velocityForm.value;
-    this.utilService.setRobotSetPoint(v1, v2);
+    this.utilService.setRobotSetPointSpeeds(v1, v2);
   }
 
   getEstado(): void {
     this.utilService.getRobotState().then(() => {
       let estado = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < this.CANTIDAD_DATA_BLUETOOTH; i++) {
         this.bluetoothSerial.readUntil('\n').then((data: String) => {
           if (data && data !== '' && data.length > 1) {
             estado.push(data);
-            if (i === 3) {
+            if (i === this.CANTIDAD_DATA_BLUETOOTH - 1) {
               this.velocidadLinear = parseFloat(estado[0]);
               this.velocidadAngular = parseFloat(estado[1]);
               this.inclinacion = parseFloat(estado[2]);
-              this.bateria = parseFloat(estado[3]);
-              this.utilService.bateria = parseFloat(estado[3]);
+              this.robot_X = parseFloat(estado[3]);
+              this.robot_Y = parseFloat(estado[4]);
+              this.robot_Orientacion = parseFloat(estado[5]);
+              this.utilService.bateria = parseFloat(estado[6]);
               this.bluetoothSerial.clear().then(() => { });
             }
           }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Observer } from 'rxjs';
 
 
 
@@ -11,7 +10,7 @@ import { Observable, Observer } from 'rxjs';
 export class UtilFunctionsService {
   MacAddress = null;
   ///////////////////////////////////////
-  COMMAND_SETPOINT = 'A';
+  COMMAND_SETPOINT_SPEEDS = 'A';
   COMMAND_GETSTATE = 'B';
   SET_PID_K_INCLINATION = 'C';
   GET_PID_K_INCLINATION = 'D';
@@ -19,6 +18,9 @@ export class UtilFunctionsService {
   GET_PID_K_VELOCITY = 'F';
   SET_PID_K_ANGULAR_VELOCITY = 'G';
   GET_PID_K_ANGULAR_VELOCITY = 'H';
+  RESET_DYNAMICAL_STATE = 'R';
+  POINT_TRACKER_MODE = 'P';
+  STOP_POINT_TRACKER_MODE = 'S';
   ///////////////////////////////////////
   bateria: number;
 
@@ -85,25 +87,62 @@ export class UtilFunctionsService {
     return this.bluetoothSerial.write(this.GET_PID_K_INCLINATION);
   }
 
+  setConstantPIDInclination(kc: number, ki: number, kd: number): void {
+    const data: Uint8Array = this.convertFloat2Uint8Array(new Float32Array([kc, ki, kd]), Uint8Array);
+    this.bluetoothSerial.write(this.SET_PID_K_INCLINATION).then(() => {
+      this.bluetoothSerial.write(data);
+    });
+
+  }
+
+
+
   getConstantPIDVelocity(): Promise<any> {
     return this.bluetoothSerial.write(this.GET_PID_K_VELOCITY);
+  }
+
+  setConstantPIDVelocity(kc: number, ki: number, kd: number): void {
+    const data: Uint8Array = this.convertFloat2Uint8Array(new Float32Array([kc, ki, kd]), Uint8Array);
+    this.bluetoothSerial.write(this.SET_PID_K_VELOCITY).then(() => {
+      this.bluetoothSerial.write(data);
+    });
+
   }
 
   getConstantPIDAngularVelocity(): Promise<any> {
     return this.bluetoothSerial.write(this.GET_PID_K_ANGULAR_VELOCITY);
   }
 
-  setRobotSetPoint(velocity: number, angular_velocity: number) {
-    const data: Uint8Array = this.convertFloat2Uint8Array(new Float32Array([velocity, angular_velocity]), Uint8Array);
-    this.bluetoothSerial.write(this.COMMAND_SETPOINT).then(() => {
+  setConstantPIDAngularVelocity(kc: number, ki: number, kd: number): void {
+    const data: Uint8Array = this.convertFloat2Uint8Array(new Float32Array([kc, ki, kd]), Uint8Array);
+    this.bluetoothSerial.write(this.SET_PID_K_ANGULAR_VELOCITY).then(() => {
       this.bluetoothSerial.write(data);
     });
   }
 
 
 
+  setRobotSetPointSpeeds(velocity: number, angular_velocity: number) {
+    const data: Uint8Array = this.convertFloat2Uint8Array(new Float32Array([velocity, angular_velocity]), Uint8Array);
+    this.bluetoothSerial.write(this.COMMAND_SETPOINT_SPEEDS).then(() => {
+      this.bluetoothSerial.write(data);
+    });
+  }
 
+  setRobotPointTraker(posX: number, posY: number) {
+    const data: Uint8Array = this.convertFloat2Uint8Array(new Float32Array([posX, posY]), Uint8Array);
+    this.bluetoothSerial.write(this.POINT_TRACKER_MODE).then(() => {
+      this.bluetoothSerial.write(data);
+    });
+  }
 
+  stopRobotPointTracker(): Promise<any> {
+    return this.bluetoothSerial.write(this.STOP_POINT_TRACKER_MODE);
+  }
+
+  resetDynamicalState(): Promise<any> {
+    return this.bluetoothSerial.write(this.RESET_DYNAMICAL_STATE);
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////

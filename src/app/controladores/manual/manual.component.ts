@@ -162,7 +162,7 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
         this.angular_velocity = 0;
       }
     }
-    this.utilService.setRobotSetPoint(this.velocity, this.angular_velocity);
+    this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
 
   }
 
