@@ -45,7 +45,6 @@ export class HomePage implements OnInit, OnDestroy {
       {
         src: '/assets/ArduinoMega.jpg', titulo: 'Arduino Mega 2560',
         descripcion: 'Kit de desarrollo, integrado por un microcontrolador Atmel AVR de la familia de microcontroladores RISC.'
-
       },
       {
         src: '/assets/MPU6050.jpg', titulo: 'Sensor inercial MPU6050',
