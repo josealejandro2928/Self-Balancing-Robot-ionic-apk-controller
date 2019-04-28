@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogConnectToBluetoothComponent } from './dialog-connect-to-bluetooth/dialog-connect-to-bluetooth.component';
 import { UtilFunctionsService } from './../ComomServices/util-functions.service';
-
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 
 @Component({
   selector: 'app-controladores',
@@ -10,14 +10,14 @@ import { UtilFunctionsService } from './../ComomServices/util-functions.service'
   styleUrls: ['./controladores.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ControladoresPage implements OnInit {
+export class ControladoresPage implements OnInit, OnDestroy {
   start: any;
   end: any;
   TabsIndex = 0;
   elapsedTime = 0;
   myBtn: any = null;
 
-  constructor(public dialog: MatDialog, public utilService: UtilFunctionsService) {
+  constructor(public dialog: MatDialog, public utilService: UtilFunctionsService, private bluetoothSerial: BluetoothSerial) {
     if (!this.utilService.MacAddress) {
       this.utilService.showError('Conéctese con el bluetooth');
     }
@@ -25,6 +25,10 @@ export class ControladoresPage implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  ngOnDestroy() {
+    this.bluetoothSerial.clear().then(() => { });
   }
 
 

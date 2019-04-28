@@ -18,15 +18,16 @@ export class AppComponent {
       icon: 'logo-android'
     },
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'Ajuste',
+      title: 'Ajuste de parámetros',
       url: '/ajuste',
       icon: 'build'
+    },
+    {
+      title: 'Galería',
+      url: '/home',
+      icon: 'photos'
     }
+    
   ];
 
   constructor(

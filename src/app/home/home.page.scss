@@ -7,4 +7,38 @@
 
 ion-card {
   margin: 0px !important;
+  width: 100% !important;
+}
+
+ion-slide {
+  width: 360px !important;
+  background: rgba(255, 255, 255, 0.825) !important;
+}
+
+.mat-title {
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+  margin: 0px 0 0px;
+}
+
+.titulo {
+  padding: 10px;
+
+  p {
+    display: block !important;
+    margin-block-start: 0.25em;
+    margin-block-end: 0.25em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-size: 17px !important;
+  }
+}
+
+.ImageRobots {
+  margin-top: 5px;
+  width: 300px !important;
+}
+
+.ImageComponent {
+  margin-top: 5px;
+  height: 150px !important;
 }

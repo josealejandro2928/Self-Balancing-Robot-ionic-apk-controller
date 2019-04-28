@@ -18,11 +18,11 @@
   <!-- Valor -->
   <ng-container matColumnDef="valor">
     <mat-header-cell *matHeaderCellDef>
-      <span style="margin-left: 20px;">Valor</span>
+      <span style="margin-left: 15px;">Valor</span>
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <span style="margin-left:25px;">
-        {{element.valor.toFixed(2)}}
+      <span style="margin-left:15px;">
+        {{element.valor.toFixed(2)+'  '+element.unidadMedida}}
       </span>
     </mat-cell>
   </ng-container>
@@ -34,8 +34,8 @@
 
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <span style="margin-left:20px;">
-        {{element.media.toFixed(2)}}
+      <span style="margin-left:15px;">
+        {{element.media.toFixed(2) + '  ' + element.unidadMedida }}
       </span>
     </mat-cell>
   </ng-container>

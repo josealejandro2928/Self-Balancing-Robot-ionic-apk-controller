@@ -8,30 +8,48 @@
       <mat-icon class="bluetooth-ico">bluetooth</mat-icon>
     </button> -->
     <ion-title>
-      Documentacíon
+      Documentación
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class="welcome-card">
-    <ion-slides loop="true" autoplay="3000" pager>
-      <ion-slide *ngFor="let image of images">
-        <ion-img [src]="image"></ion-img>
-      </ion-slide>
-    </ion-slides>
-    <ion-card-header>
-      <ion-card-subtitle>Aplicacion desarrollada por Jose Alejandro Concepción</ion-card-subtitle>
-      <ion-card-title>Controlador del Robot Autobalanceado</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-    </ion-card-content>
+  <ion-slides loop="true" autoplay="3000" pager>
+    <ion-slide *ngFor="let image of images">
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <img class="ImageRobots mat-elevation-z4" [src]="image.src">
+        </div>
+        <div class="titulo">
+          <span fxLayoutAlign="start start" class="mat-title">
+            {{image.titulo}}
+          </span>
+          <p fxLayoutAlign="start start" class="Descripcion">{{image.descripcion}}</p>
+        </div>
 
-  </ion-card>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <mat-divider></mat-divider>
 
+  <span fxLayoutAlign="center center" class="mat-title" style="margin-top:5px !important;">Componentes del
+    Hardware:</span>
 
+  <ion-slides loop="true" autoplay="3000" pager>
+    <ion-slide *ngFor="let componente of componentes">
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <img class="ImageComponent mat-elevation-z4" [src]="componente.src">
+        </div>
+        <div class="titulo">
+          <span fxLayoutAlign="start start" class="mat-title">
+            {{componente.titulo}}
+          </span>
+          <p fxLayoutAlign="start start" class="Descripcion">{{componente.descripcion}}</p>
+        </div>
 
-
-
+      </div>
+    </ion-slide>
+  </ion-slides>
 
 </ion-content>

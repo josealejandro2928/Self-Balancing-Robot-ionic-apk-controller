@@ -8,10 +8,11 @@ import { File } from '@ionic-native/file/ngx';
 
 
 export interface RobotVariable {
-  variableTitle: string;
-  valor: number;
-  media: number;
-  suma: number;
+  variableTitle?: string;
+  valor?: number;
+  media?: number;
+  suma?: number;
+  unidadMedida?: string;
 }
 
 
@@ -22,12 +23,14 @@ export interface RobotVariable {
   encapsulation: ViewEncapsulation.None
 })
 export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<RobotVariable>([]);
   counter = 0;
   displayedColumns = ['variable', 'valor', 'media'];
   @Input() index;
   @Input() currentIndex;
   Refrescamiento: any;
+  timeTemp: any;
+  DataToExport = [];
 
   CANTIDAD_DATA_BLUETOOTH = 7;
   ////////////////////////////////////////
@@ -40,25 +43,30 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   aceleracion = 0.0;
   ////////////////////////////////////////
 
-  SAMPLE_TIME = 125; // tiempo en ms
+  SAMPLE_TIME = 100; // tiempo en ms
 
   almacenarDatos = false;
   robotVariables: RobotVariable[] = [
-    { variableTitle: 'Posición X', valor: 0.0, media: 0.0, suma: 0.0 },
-    { variableTitle: 'Posición Y', valor: 0.0, media: 0.0, suma: 0.0 },
-    { variableTitle: 'Inclinación', valor: 0.0, media: 0.0, suma: 0.0 },
-    { variableTitle: 'Velocidad Lineal', valor: 0.0, media: 0.0, suma: 0.0 },
-    { variableTitle: 'Velocidad Angular', valor: 0.0, media: 0.0, suma: 0.0 },
-    { variableTitle: 'Orientación', valor: 0.0, media: 0.0, suma: 0.0 }
+    { variableTitle: 'Posición X', valor: 0.0, media: 0.0, suma: 0.0, unidadMedida: 'm' },
+    { variableTitle: 'Posición Y', valor: 0.0, media: 0.0, suma: 0.0, unidadMedida: 'm' },
+    { variableTitle: 'Inclinación', valor: 0.0, media: 0.0, suma: 0.0, unidadMedida: 'grad' },
+    { variableTitle: 'Velocidad Lineal', valor: 0.0, media: 0.0, suma: 0.0, unidadMedida: 'm/s' },
+    { variableTitle: 'Velocidad Angular', valor: 0.0, media: 0.0, suma: 0.0, unidadMedida: 'rad/s' },
+    { variableTitle: 'Orientación', valor: 0.0, media: 0.0, suma: 0.0, unidadMedida: 'grad' }
 
   ];
 
 
   constructor(private bluetoothSerial: BluetoothSerial,
-    private utilService: UtilFunctionsService, private fileHandle: File) { }
+    private utilService: UtilFunctionsService, private fileHandle: File) {
+
+
+  }
 
   ngOnInit() {
     this.InitTable();
+    this.timeTemp = setTimeout(() => this.CearDirectorios(), 2000);
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -83,12 +91,13 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy() {
     clearInterval(this.Refrescamiento);
+    clearTimeout(this.timeTemp);
     this.counter = 0;
     this.RestartArrayData();
   }
 
   InitTable(): void {
-    this.dataSource = new MatTableDataSource<any>(this.robotVariables);
+    this.dataSource = new MatTableDataSource<RobotVariable>(this.robotVariables);
   }
 
   getEstado(): void {
@@ -118,6 +127,29 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   getData() {
     this.counter++;
     if (this.counter) {
+
+      if (this.almacenarDatos) {
+        if (this.DataToExport.length <= 100) {
+          this.DataToExport.push(
+            {
+              robotX: this.utilService.CopyObject(this.robot_X),
+              robotY: this.utilService.CopyObject(this.robot_Y),
+              inclinacion: this.utilService.CopyObject(this.inclinacion),
+              velocidadLineal: this.utilService.CopyObject(this.velLineal),
+              velocidadAngular: this.utilService.CopyObject(this.velAngular),
+              orientacion: this.utilService.CopyObject(this.robot_Orientacion)
+            }
+          );
+        }
+        else {
+          this.onStopGettingData();
+        }
+
+      }
+
+
+
+
 
       ////// POSICION X ///////
       this.robotVariables[0].valor = this.utilService.CopyObject(this.robot_X);
@@ -175,14 +207,70 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onSaveData(): void {
-    this.Refresh();
     this.almacenarDatos = true;
+    this.DataToExport = [];
   }
 
   onStopGettingData(): void {
     this.almacenarDatos = false;
+    this.WriteDataonMovil(JSON.stringify(this.DataToExport));
+
   }
 
 
+  ////////Creando directorios para almacenar archivos/////////
+  CearDirectorios(): void {
+    if (this.index === 0) {
+      this.fileHandle.checkDir(this.fileHandle.externalDataDirectory, 'DirectorioManual').then((data) => {
+      })
+        .catch(err => {
+          this.fileHandle.createDir(this.fileHandle.externalDataDirectory, 'DirectorioManual', true).then(() => {
+            this.utilService.showToast('Directorio manual creado');
+
+          }).catch(() => {
+            this.utilService.showError('Error creando directorio manual');
+          });
+        });
+
+    } else if (this.index === 1) {
+      this.fileHandle.checkDir(this.fileHandle.externalDataDirectory, 'DirectorioAutomatico').then(() => {
+      })
+        .catch(err => {
+          this.fileHandle.createDir(this.fileHandle.externalDataDirectory, 'DirectorioAutomatico', true).then(() => {
+            this.utilService.showToast('Directorio automatico creado');
+
+          }).catch(() => {
+            this.utilService.showError('Error creando directorio automatico');
+          });
+        });
+    }
+
+  }
+
+  ///////Crear archivos/////////
+  WriteDataonMovil(data): void {
+
+    if (this.index === 0) {
+      this.fileHandle.writeFile(this.fileHandle.externalDataDirectory + '/DirectorioManual', 'DatosManual.txt', data, { replace: true })
+        .then(() => {
+          this.utilService.showToast('Datos del controlador manual guardados');
+        })
+        .catch((err) => {
+          this.utilService.showError('Error escribiendo archivo');
+        });
+    }
+    else if (this.index === 1) {
+      this.fileHandle.writeFile(this.fileHandle.externalDataDirectory + '/DirectorioAutomatico', 'DatosAutomatico.txt', data,
+        { replace: true })
+        .then(() => {
+          this.utilService.showToast('Datos del controlador automático guardados');
+        })
+        .catch((err) => {
+          this.utilService.showError('Error escribiendo archivo');
+        });
+
+    }
+
+  }
 
 }

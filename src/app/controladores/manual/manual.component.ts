@@ -30,13 +30,14 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   downBtn: any = null;
   leftBtn: any = null;
   rightBtn: any = null;
-  SAMPLE_TIME = 100;
+  SAMPLE_TIME = 85;
 
 
   velocity = 0.0;
   angular_velocity = 0.0;
 
-  max_velocity = 0.4; // m/s
+  max_velocity = 0.45; // m/s
+  lv_step = 0.05;
   max_angular_velocity = 3.0; // rad/s
 
   constructor(private bluetoothSerial: BluetoothSerial,
@@ -128,17 +129,17 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
 
   getButtons() {
     if (this.keys.forward) {
-      this.velocity = Math.min(this.velocity + 0.1, this.max_velocity + 0.1);
+      this.velocity = Math.min(this.velocity + this.lv_step, this.max_velocity );
     }
     else if (this.keys.backward) {
-      this.velocity = Math.max(this.velocity - 0.1, -1.0 * this.max_velocity);
+      this.velocity = Math.max(this.velocity - this.lv_step, -1.0 * this.max_velocity);
     }
     else {
       if (this.velocity > 0) {
-        this.velocity = Math.max(this.velocity - 0.1, 0.0);
+        this.velocity = Math.max(this.velocity - this.lv_step, 0.0);
       }
       else if (this.velocity < 0) {
-        this.velocity = Math.min(this.velocity + 0.1, 0.0);
+        this.velocity = Math.min(this.velocity + this.lv_step, 0.0);
       }
       else {
         this.velocity = 0.0;

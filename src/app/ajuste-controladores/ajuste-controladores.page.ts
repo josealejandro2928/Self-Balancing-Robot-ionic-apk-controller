@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { UtilFunctionsService } from './../ComomServices/util-functions.service';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
@@ -10,7 +10,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
   styleUrls: ['ajuste-controladores.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AjusteControladoresPage implements OnInit {
+export class AjusteControladoresPage implements OnInit, OnDestroy {
 
   PIDConstantForm: FormGroup;
   ParametrosFrom: FormGroup;
@@ -21,6 +21,10 @@ export class AjusteControladoresPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.bluetoothSerial.clear().then(() => { });
   }
 
   BuildForms(): void {
@@ -52,6 +56,10 @@ export class AjusteControladoresPage implements OnInit {
   }
 
   onObtenerConstantesPID_I(): void {
+    for (let k = 0; k < 2; k++) {
+
+
+    }
     this.utilService.getConstantPIDInclination().then(() => {
       let estado = [];
       for (let i = 0; i < 3; i++) {
