@@ -8,7 +8,7 @@
       <mat-icon class="bluetooth-ico">bluetooth</mat-icon>
     </button> -->
     <ion-title>
-      Documentación
+      Galería
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
 <ion-content>
   <ion-slides loop="true" autoplay="3000" pager>
     <ion-slide *ngFor="let image of images">
-      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
+      <div fxLayout="column" class="contenido" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
           <img class="ImageRobots mat-elevation-z4" [src]="image.src">
         </div>

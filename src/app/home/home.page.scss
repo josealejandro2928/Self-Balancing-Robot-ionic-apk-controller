@@ -1,18 +1,10 @@
-.welcome-card ion-img {
-  max-height: 80vh;
-  height: 50vh;
-  max-width: 80vw;
-  overflow: hidden;
-}
-
-ion-card {
-  margin: 0px !important;
-  width: 100% !important;
-}
-
 ion-slide {
-  width: 360px !important;
+  width: 100% !important;
   background: rgba(255, 255, 255, 0.825) !important;
+}
+
+.contenido {
+  width: 100% !important;
 }
 
 .mat-title {
