@@ -42,8 +42,8 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   robot_Orientacion = 0.0;
   aceleracion = 0.0;
   ////////////////////////////////////////
-
-  SAMPLE_TIME = 100; // tiempo en ms
+  SAMPLE_TIME = 50; // tiempo en ms
+  MAX_TIME_TO_GET_DATA = (10 / this.SAMPLE_TIME) * 1000;
 
   almacenarDatos = false;
   robotVariables: RobotVariable[] = [
@@ -65,6 +65,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.InitTable();
+    console.log(this.MAX_TIME_TO_GET_DATA);
     this.timeTemp = setTimeout(() => this.CearDirectorios(), 2000);
 
   }
@@ -129,7 +130,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
     if (this.counter) {
 
       if (this.almacenarDatos) {
-        if (this.DataToExport.length <= 100) {
+        if (this.DataToExport.length <= this.MAX_TIME_TO_GET_DATA) {
           this.DataToExport.push(
             {
               robotX: this.utilService.CopyObject(this.robot_X),
@@ -220,56 +221,63 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
 
   ////////Creando directorios para almacenar archivos/////////
   CearDirectorios(): void {
-    if (this.index === 0) {
-      this.fileHandle.checkDir(this.fileHandle.externalDataDirectory, 'DirectorioManual').then((data) => {
-      })
-        .catch(err => {
-          this.fileHandle.createDir(this.fileHandle.externalDataDirectory, 'DirectorioManual', true).then(() => {
-            this.utilService.showToast('Directorio manual creado');
+    if (this.utilService.MacAddress) {
+      if (this.index === 0) {
+        this.fileHandle.checkDir(this.fileHandle.externalDataDirectory, 'DirectorioManual').then((data) => {
+        })
+          .catch(err => {
+            this.fileHandle.createDir(this.fileHandle.externalDataDirectory, 'DirectorioManual', true).then(() => {
+              this.utilService.showToast('Directorio manual creado');
 
-          }).catch(() => {
-            this.utilService.showError('Error creando directorio manual');
+            }).catch(() => {
+              this.utilService.showError('Error creando directorio manual');
+            });
           });
-        });
 
-    } else if (this.index === 1) {
-      this.fileHandle.checkDir(this.fileHandle.externalDataDirectory, 'DirectorioAutomatico').then(() => {
-      })
-        .catch(err => {
-          this.fileHandle.createDir(this.fileHandle.externalDataDirectory, 'DirectorioAutomatico', true).then(() => {
-            this.utilService.showToast('Directorio automatico creado');
+      } else if (this.index === 1) {
+        this.fileHandle.checkDir(this.fileHandle.externalDataDirectory, 'DirectorioAutomatico').then(() => {
+        })
+          .catch(err => {
+            this.fileHandle.createDir(this.fileHandle.externalDataDirectory, 'DirectorioAutomatico', true).then(() => {
+              this.utilService.showToast('Directorio automatico creado');
 
-          }).catch(() => {
-            this.utilService.showError('Error creando directorio automatico');
+            }).catch(() => {
+              this.utilService.showError('Error creando directorio automatico');
+            });
           });
-        });
+      }
+
     }
+
 
   }
 
   ///////Crear archivos/////////
   WriteDataonMovil(data): void {
+    if (this.utilService.MacAddress) {
+      if (this.index === 0) {
+        this.fileHandle.writeFile(this.fileHandle.externalDataDirectory + '/DirectorioManual', 'DatosManual.txt', data, { replace: true })
+          .then(() => {
+            this.utilService.showToast('Datos del controlador manual guardados');
+          })
+          .catch((err) => {
+            this.utilService.showError('Error escribiendo archivo');
+          });
+      }
+      else if (this.index === 1) {
+        this.fileHandle.writeFile(this.fileHandle.externalDataDirectory + '/DirectorioAutomatico', 'DatosAutomatico.txt', data,
+          { replace: true })
+          .then(() => {
+            this.utilService.showToast('Datos del controlador automático guardados');
+          })
+          .catch((err) => {
+            this.utilService.showError('Error escribiendo archivo');
+          });
 
-    if (this.index === 0) {
-      this.fileHandle.writeFile(this.fileHandle.externalDataDirectory + '/DirectorioManual', 'DatosManual.txt', data, { replace: true })
-        .then(() => {
-          this.utilService.showToast('Datos del controlador manual guardados');
-        })
-        .catch((err) => {
-          this.utilService.showError('Error escribiendo archivo');
-        });
-    }
-    else if (this.index === 1) {
-      this.fileHandle.writeFile(this.fileHandle.externalDataDirectory + '/DirectorioAutomatico', 'DatosAutomatico.txt', data,
-        { replace: true })
-        .then(() => {
-          this.utilService.showToast('Datos del controlador automático guardados');
-        })
-        .catch((err) => {
-          this.utilService.showError('Error escribiendo archivo');
-        });
+      }
 
     }
+
 
   }
 
