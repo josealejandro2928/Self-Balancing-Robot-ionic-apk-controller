@@ -10,16 +10,19 @@
 
       <ion-content class="card-background-page">
         <ion-card>
-          <img src="/assets/balanduino.jpg">
+          <div class="mat-elevation-z32">
+            <img src="/assets/mi_Robot.png">
+          </div>
+
         </ion-card>
-      
+
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
+              <span class='mat-title' style="margin:0px !important; font-size:18px !important;">
                 {{p.title}}
-              </ion-label>
+              </span>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
