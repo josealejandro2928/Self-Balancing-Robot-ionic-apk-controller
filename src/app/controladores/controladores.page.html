@@ -26,7 +26,7 @@
     <mat-tab label="MANUAL">
       <app-manual [currentIndex]="TabsIndex" [index]="0"></app-manual>
       <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <app-state-table #state0 [currentIndex]="TabsIndex" [index]="0"></app-state-table>
+        <app-state-table [currentIndex]="TabsIndex" [index]="0"></app-state-table>
       </div>
 
     </mat-tab>
@@ -34,7 +34,7 @@
     <mat-tab label="AUTOMÁTICO">
       <app-automatico [currentIndex]="TabsIndex" [index]="1"></app-automatico>
       <div fxLayout="row" class="estado-automatico" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <app-state-table #state1 [currentIndex]="TabsIndex" [index]="1"></app-state-table>
+        <app-state-table [currentIndex]="TabsIndex" [index]="1"></app-state-table>
       </div>
     </mat-tab>
 

@@ -28,7 +28,10 @@ export class ControladoresPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.bluetoothSerial.clear().then(() => { });
+    if (this.utilService.MacAddress) {
+      this.bluetoothSerial.clear().then(() => { });
+    }
+
   }
 
 

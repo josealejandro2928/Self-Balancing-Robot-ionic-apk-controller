@@ -1,5 +1,16 @@
-<mat-toolbar-row>
+<mat-toolbar-row fxLayoutAlign="space-between center">
   <span class="mat-title">Variables del Robot</span>
+  <button *ngIf="!this.holdPosicion" mat-stroked-button class="guardarBtn" (click)="onHoldPosition()">
+    <mat-icon class="mat-18">lock_open</mat-icon>
+    POSICION
+  </button>
+  <button *ngIf="this.holdPosicion" mat-stroked-button class="PararBtn" (click)="onLeavePosition()">
+    <mat-icon class="mat-18">lock</mat-icon>
+    POSICION
+  </button>
+
+
+
 </mat-toolbar-row>
 
 <mat-table class="estado-table" [dataSource]="dataSource" class="mat-elevation-z4">

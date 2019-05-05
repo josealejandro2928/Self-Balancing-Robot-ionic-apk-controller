@@ -12,7 +12,9 @@
 
 <ion-content>
   <div class="PaginaContenido">
-    <h5 fxLayoutAlign="center center">Ajuste de controladores</h5>
+    <span class="mat-title" style="margin-bottom: 5px !important; padding-top:4px !important;"
+      fxLayoutAlign="center center">Ajuste de
+      controladores</span>
     <mat-divider></mat-divider>
 
     <form [formGroup]="this.PIDConstantForm">
@@ -98,27 +100,28 @@
       <mat-divider style="margin-top:8px;"></mat-divider>
 
     </form>
-    <h5 fxLayoutAlign="center center">Ajuste de Párametros del Robot</h5>
-    <form [formGroup]="this.ParametrosFrom">
-      <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-        <mat-form-field appearance="outline" fxFlex="47">
-          <mat-label>Radio-Ruedas [m/s]</mat-label>
-          <input type="number" placeholder="Radio-Ruedas [m/s]"
-            [formControl]="this.ParametrosFrom.controls['radioRuedas']" required matInput>
-        </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="47">
-          <mat-label>Offset-Inclinación[grad]</mat-label>
-          <input type="number" placeholder="Offset-Inclinación[grad]"
-            [formControl]="this.ParametrosFrom.controls['anguloOffset']" required matInput>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
-        <button mat-raised-button [disabled]="this.ParametrosFrom.invalid" style="margin-right: 10px;"
-          (click)="onEnviarParametrosRobot()" class="startBtn">Enviar</button>
-        <button mat-raised-button (click)="onObtenerParametrosRobot()" color="primary">Obtener</button>
-      </div>
-      <mat-divider style="margin-top:8px;"></mat-divider>
-    </form>
+    <span class="mat-title" style="margin-bottom: 5px !important; padding-top:4px !important;"
+      fxLayoutAlign="center center">Ajuste de Párametros del Robot</span>
+      <form [formGroup]="this.ParametrosFrom">
+        <div fxLayout="row" style="margin-top: 8px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+          <mat-form-field appearance="outline" fxFlex="47">
+            <mat-label>Radio-Ruedas [m/s]</mat-label>
+            <input type="number" placeholder="Radio-Ruedas [m/s]"
+              [formControl]="this.ParametrosFrom.controls['radioRuedas']" required matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="47">
+            <mat-label>Offset-Inclinación[grad]</mat-label>
+            <input type="number" placeholder="Offset-Inclinación[grad]"
+              [formControl]="this.ParametrosFrom.controls['anguloOffset']" required matInput>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="gappx">
+          <button mat-raised-button [disabled]="this.ParametrosFrom.invalid" style="margin-right: 10px;"
+            (click)="onEnviarParametrosRobot()" class="startBtn">Enviar</button>
+          <button mat-raised-button (click)="onObtenerParametrosRobot()" color="primary">Obtener</button>
+        </div>
+        <mat-divider style="margin-top:8px;"></mat-divider>
+      </form>
 
   </div>
 

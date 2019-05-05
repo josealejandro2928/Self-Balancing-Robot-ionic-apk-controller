@@ -31,6 +31,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   Refrescamiento: any;
   timeTemp: any;
   DataToExport = [];
+  holdPosicion = false;
 
   CANTIDAD_DATA_BLUETOOTH = 7;
   ////////////////////////////////////////
@@ -65,7 +66,6 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.InitTable();
-    console.log(this.MAX_TIME_TO_GET_DATA);
     this.timeTemp = setTimeout(() => this.CearDirectorios(), 2000);
 
   }
@@ -215,6 +215,21 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   onStopGettingData(): void {
     this.almacenarDatos = false;
     this.WriteDataonMovil(JSON.stringify(this.DataToExport));
+  }
+
+  onHoldPosition(): void {
+    this.holdPosicion = true;
+    if (this.utilService.MacAddress) {
+      this.utilService.setRobotPointTraker(this.robot_X, this.robot_Y);
+    }
+
+  }
+
+  onLeavePosition(): void {
+    this.holdPosicion = false;
+    if (this.utilService.MacAddress) {
+      this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+    }
 
   }
 
