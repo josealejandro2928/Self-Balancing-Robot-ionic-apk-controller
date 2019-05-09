@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { UtilFunctionsService } from './../../ComomServices/util-functions.service';
 import { File } from '@ionic-native/file/ngx';
+import { Subscription } from 'rxjs'; 
 
 
 
@@ -32,6 +33,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   timeTemp: any;
   DataToExport = [];
   holdPosicion = false;
+  resetHoldPosition: Subscription;
 
   CANTIDAD_DATA_BLUETOOTH = 7;
   ////////////////////////////////////////
@@ -43,7 +45,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   robot_Orientacion = 0.0;
   aceleracion = 0.0;
   ////////////////////////////////////////
-  SAMPLE_TIME = 50; // tiempo en ms
+  SAMPLE_TIME = 100; // tiempo en ms
   MAX_TIME_TO_GET_DATA = (10 / this.SAMPLE_TIME) * 1000;
 
   almacenarDatos = false;
@@ -67,6 +69,18 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {
     this.InitTable();
     this.timeTemp = setTimeout(() => this.CearDirectorios(), 2000);
+    
+    this.resetHoldPosition = this.utilService.resetHoldPosition.subscribe((data:any)=>{
+      if(data.index === this.index){
+        this.holdPosicion = false;
+        console.log('reset');
+        if( this.utilService.MacAddress ){
+          this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+        }
+      }
+      
+      
+    })
 
   }
 
@@ -76,6 +90,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
     }
     if (changes.index) {
       this.index = changes.index.currentValue;
+      
     }
 
     if (this.index === this.currentIndex && this.utilService.MacAddress) {
@@ -95,6 +110,7 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
     clearTimeout(this.timeTemp);
     this.counter = 0;
     this.RestartArrayData();
+    this.resetHoldPosition.unsubscribe();
   }
 
   InitTable(): void {
@@ -218,18 +234,27 @@ export class StateTableComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onHoldPosition(): void {
-    this.holdPosicion = true;
-    if (this.utilService.MacAddress) {
-      this.utilService.setRobotPointTraker(this.robot_X, this.robot_Y);
+    if (this.index === this.currentIndex) {
+      this.holdPosicion = true;
+      this.utilService.holdPosition.next({hold:1,index:this.index});
+      if (this.utilService.MacAddress) {
+        this.utilService.setRobotPointTraker(this.robot_X, this.robot_Y);
+      }
     }
+    
 
   }
 
   onLeavePosition(): void {
-    this.holdPosicion = false;
-    if (this.utilService.MacAddress) {
-      this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+    if (this.index === this.currentIndex) {
+      this.holdPosicion = false;
+      this.utilService.holdPosition.next({hold:0,index:this.index});
+      if (this.utilService.MacAddress) {
+        this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
+      }
+
     }
+    
 
   }
 

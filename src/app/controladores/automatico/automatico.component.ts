@@ -33,10 +33,15 @@ export class AutomaticoComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.index) {
       this.index = changes.index.currentValue;
     }
+
+    if (this.index !== this.currentIndex) {
+      this.utilService.resetHoldPosition.next({index:this.index});
+    } 
+
   }
 
   ngOnDestroy() {
-    // clearInterval(this.Refrescamiento);
+   
   }
 
   BuildForm(): void {

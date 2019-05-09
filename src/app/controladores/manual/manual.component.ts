@@ -5,6 +5,7 @@ import {
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { UtilFunctionsService } from './../../ComomServices/util-functions.service';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { Subscription } from 'rxjs';
 
 export interface Keys {
   forward: boolean;
@@ -30,7 +31,7 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   downBtn: any = null;
   leftBtn: any = null;
   rightBtn: any = null;
-  SAMPLE_TIME = 75;
+  SAMPLE_TIME = 83;
 
 
   velocity = 0.0;
@@ -41,10 +42,29 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   lv_step = 0.05;
   max_angular_velocity = 3.0; // rad/s
 
+  holdPosition = false;
+  holdPositionSubs: Subscription;
+
   constructor(private bluetoothSerial: BluetoothSerial,
     private utilService: UtilFunctionsService, private vibration: Vibration) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.holdPositionSubs = this.utilService.holdPosition.subscribe((data: any) => {
+      if (data.index === this.index) {
+        if (data.hold) {
+          this.holdPosition = true;
+          console.log('apreto');
+        }
+        else {
+          this.holdPosition = false;
+          console.log('solto');
+        }
+      }
+
+
+    });
+
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.currentIndex) {
@@ -58,12 +78,17 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
       this.Refrescamiento = setInterval(() => this.getButtons(), this.SAMPLE_TIME);
     } else {
       clearInterval(this.Refrescamiento);
+      this.holdPosition = false;
+      this.utilService.resetHoldPosition.next({index:this.index});
+
     }
 
   }
 
   ngOnDestroy() {
     clearInterval(this.Refrescamiento);
+    this.holdPositionSubs.unsubscribe();
+
   }
 
   ngAfterViewInit() {
@@ -164,8 +189,10 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
         this.angular_velocity = 0;
       }
     }
-    // console.log(this.velocity);
-    this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
+    if (!this.holdPosition) {
+      this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
+    }
+
 
   }
 

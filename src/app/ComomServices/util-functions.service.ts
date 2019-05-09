@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 
 
 
@@ -23,9 +24,13 @@ export class UtilFunctionsService {
   STOP_POINT_TRACKER_MODE = 'S';
   ///////////////////////////////////////
   bateria: number;
+  holdPosition: Subject<any>;
+  resetHoldPosition: Subject<any>;
 
   constructor(private bluetoothSerial: BluetoothSerial, private toastr: ToastrService) {
     this.bateria = 0.0;
+    this.holdPosition = new Subject();
+    this.resetHoldPosition = new Subject();
 
   }
 
@@ -99,6 +104,7 @@ export class UtilFunctionsService {
 
   getConstantPIDVelocity(): Promise<any> {
     return this.bluetoothSerial.write(this.GET_PID_K_VELOCITY);
+
   }
 
   setConstantPIDVelocity(kc: number, ki: number, kd: number): void {
