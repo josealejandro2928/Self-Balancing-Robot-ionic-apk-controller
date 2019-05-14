@@ -1,20 +1,13 @@
 app-controladores {
-    .mat-tab-labels {
-        display: block !important;
-        text-align: center !important;
+
+    .TabsContent {
+        overflow-y: scroll !important;
+        //padding: 16px !important;
+
     }
 
-    .mat-tab-body {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        display: block;
-        overflow: hidden;
-        flex-basis: 100%;
-        padding: 10px 16px 16px 16px;
-    }
+
+
 
     .mat-tab-label-content {
         font-weight: 600;

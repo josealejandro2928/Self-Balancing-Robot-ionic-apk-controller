@@ -19,24 +19,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<mat-tab-group class="TabsContent" (selectedTabChange)="OnTabChange($event.index)" color="primary"
+  mat-align-tabs="center" backgroundColor="primary" animationDuration="1150ms">
 
-  <mat-tab-group (selectedTabChange)="OnTabChange($event.index)" color="primary" backgroundColor="primary" fxFlex="100">
+  <mat-tab label="MANUAL">
 
-    <mat-tab label="MANUAL">
-      <app-manual [currentIndex]="TabsIndex" [index]="0"></app-manual>
-      <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <app-state-table [currentIndex]="TabsIndex" [index]="0"></app-state-table>
+    <ng-template matTabContent>
+      <div fxLayout="column" style="padding:16px;" fxLayoutAlign="space-between stretch" fxLayoutGap="gappx">
+        <app-manual [currentIndex]="TabsIndex" [index]="0"></app-manual>
+        <div fxLayout="row" class="estado-manual" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <app-state-table [currentIndex]="TabsIndex" [index]="0"></app-state-table>
+        </div>
       </div>
+    </ng-template>
 
-    </mat-tab>
+  </mat-tab>
 
-    <mat-tab label="AUTOMÁTICO">
-      <app-automatico [currentIndex]="TabsIndex" [index]="1"></app-automatico>
-      <div fxLayout="row" class="estado-automatico" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <app-state-table [currentIndex]="TabsIndex" [index]="1"></app-state-table>
+  <mat-tab label="AUTOMÁTICO">
+
+    <ng-template matTabContent>
+      <div fxLayout="column" style="padding:16px;" fxLayoutAlign="space-between stretch" fxLayoutGap="gappx">
+        <app-automatico [currentIndex]="TabsIndex" [index]="1"></app-automatico>
+        <div fxLayout="row" class="estado-automatico" fxFlex="100" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <app-state-table [currentIndex]="TabsIndex" [index]="1"></app-state-table>
+        </div>
       </div>
-    </mat-tab>
+    </ng-template>
 
-  </mat-tab-group>
-</ion-content>
+  </mat-tab>
+
+</mat-tab-group>
