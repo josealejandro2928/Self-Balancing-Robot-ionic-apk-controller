@@ -35,24 +35,23 @@ export class AutomaticoComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (this.index !== this.currentIndex) {
-      this.utilService.resetHoldPosition.next({index:this.index});
-    } 
+      this.utilService.resetHoldPosition.next({ index: this.index });
+    }
 
   }
 
-  ngOnDestroy() {
-   
+  ngOnDestroy(): void {
   }
 
   BuildForm(): void {
     this.ReferenciaVelocidadForm = this.fb.group({
-      spLinearVel: [0.0, [Validators.required, Validators.min(-0.8), Validators.max(0.8)]],
+      spLinearVel: [0.0, [Validators.required, Validators.min(-0.6), Validators.max(0.6)]],
       spAngularVel: [0.0, [Validators.required, Validators.min(-3.0), Validators.max(3.0)]]
     });
 
     this.PointTrackerForm = this.fb.group({
-      spPositionX: [0.0, [Validators.required, Validators.min(-2.0), Validators.max(2.0)]],
-      spPositionY: [0.0, [Validators.required, Validators.min(-2.0), Validators.max(2.0)]]
+      spPositionX: [0.0, [Validators.required, Validators.min(-5.0), Validators.max(5.0)]],
+      spPositionY: [0.0, [Validators.required, Validators.min(-5.0), Validators.max(5.0)]]
     });
 
   }
@@ -94,12 +93,12 @@ export class AutomaticoComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onRestarPointTracker(): void {
-    if (this.utilService.MacAddress){
+    if (this.utilService.MacAddress) {
       this.utilService.resetDynamicalState().then(() => {
         this.utilService.setRobotSetPointSpeeds(0.0, 0.0);
       });
     }
-    
+
 
   }
 

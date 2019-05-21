@@ -31,7 +31,7 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   downBtn: any = null;
   leftBtn: any = null;
   rightBtn: any = null;
-  SAMPLE_TIME = 83;
+  SAMPLE_TIME = 77;
 
 
   velocity = 0.0;
@@ -53,11 +53,11 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
       if (data.index === this.index) {
         if (data.hold) {
           this.holdPosition = true;
-          console.log('apreto');
+          //console.log('apreto');
         }
         else {
           this.holdPosition = false;
-          console.log('solto');
+          //console.log('solto');
         }
       }
 
