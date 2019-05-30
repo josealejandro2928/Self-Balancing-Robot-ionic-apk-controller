@@ -31,15 +31,11 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
   downBtn: any = null;
   leftBtn: any = null;
   rightBtn: any = null;
-  SAMPLE_TIME = 77;
-
-
+  
   velocity = 0.0;
   angular_velocity = 0.0;
-
-  max_forward_velocity = 0.50; // m/s
-  max_backward_velocity = 0.40; // m/s
-  lv_step = 0.05;
+  max_forward_velocity = 0.5; // m/s
+  max_backward_velocity = 0.35; // m/s
   max_angular_velocity = 3.0; // rad/s
 
   holdPosition = false;
@@ -75,11 +71,9 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
     }
 
     if (this.index === this.currentIndex && this.utilService.MacAddress) {
-      this.Refrescamiento = setInterval(() => this.getButtons(), this.SAMPLE_TIME);
     } else {
-      clearInterval(this.Refrescamiento);
       this.holdPosition = false;
-      this.utilService.resetHoldPosition.next({index:this.index});
+      this.utilService.resetHoldPosition.next({ index: this.index });
 
     }
 
@@ -102,12 +96,17 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
       this.vibration.vibrate(150);
       if (!this.keys.backward) {
         this.keys.forward = true;
+        this.velocity = this.max_forward_velocity;
+        this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
       }
+
 
     });
 
     this.upBtn.addEventListener('touchend', () => {
       this.keys.forward = false;
+      this.velocity = 0;
+      this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
     });
 
     /////////////////DOWN//////////////////
@@ -115,12 +114,16 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
       this.vibration.vibrate(150);
       if (!this.keys.forward) {
         this.keys.backward = true;
+        this.velocity = -1.0 * this.max_backward_velocity;
+        this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
       }
 
     });
 
     this.downBtn.addEventListener('touchend', () => {
       this.keys.backward = false;
+      this.velocity = 0;
+      this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
     });
 
     ////////////////LEFT//////////////////////
@@ -128,12 +131,16 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
       this.vibration.vibrate(150);
       if (!this.keys.right) {
         this.keys.left = true;
+        this.angular_velocity = this.max_angular_velocity;
+        this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
       }
 
     });
 
     this.leftBtn.addEventListener('touchend', () => {
       this.keys.left = false;
+      this.angular_velocity = 0;
+      this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
     });
 
     ////////////////RIGHT//////////////////////
@@ -141,59 +148,20 @@ export class ManualComponent implements OnInit, OnChanges, OnDestroy, AfterViewI
       this.vibration.vibrate(150);
       if (!this.keys.left) {
         this.keys.right = true;
+        this.angular_velocity = -1.0 * this.max_angular_velocity;
+        this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
       }
 
     });
 
     this.rightBtn.addEventListener('touchend', () => {
       this.keys.right = false;
+      this.angular_velocity = 0.0;
+      this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
     });
 
 
   }
 
-
-  getButtons() {
-    if (this.keys.forward) {
-      this.velocity = Math.min(this.velocity + this.lv_step, this.max_forward_velocity);
-    }
-    else if (this.keys.backward) {
-      this.velocity = Math.max(this.velocity - this.lv_step, -1.0 * this.max_backward_velocity);
-    }
-    else {
-      if (this.velocity > 0) {
-        this.velocity = Math.max(this.velocity - this.lv_step, 0.0);
-      }
-      else if (this.velocity < 0) {
-        this.velocity = Math.min(this.velocity + this.lv_step, 0.0);
-      }
-      else {
-        this.velocity = 0.0;
-      }
-    }
-    ////////////////////////////////
-    if (this.keys.left) {
-      this.angular_velocity = Math.min(this.angular_velocity + 1.0, this.max_angular_velocity);
-    }
-    else if (this.keys.right) {
-      this.angular_velocity = Math.max(this.angular_velocity - 1.0, -1.0 * this.max_angular_velocity);
-    }
-    else {
-      if (this.angular_velocity > 0) {
-        this.angular_velocity = Math.max(this.angular_velocity - 1.0, 0.0);
-      }
-      else if (this.angular_velocity < 0) {
-        this.angular_velocity = Math.min(this.angular_velocity + 1.0, 0.0);
-      }
-      else {
-        this.angular_velocity = 0;
-      }
-    }
-    if (!this.holdPosition) {
-      this.utilService.setRobotSetPointSpeeds(this.velocity, this.angular_velocity);
-    }
-
-
-  }
 
 }
